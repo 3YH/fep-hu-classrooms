@@ -1,0 +1,3 @@
+interface Ruimte {
+    ruimteId: string;
+}
