@@ -1,0 +1,22 @@
+<button mat-button (click)="addAanvraag(anvr)" >Click me!</button>
+
+<h4>Filter</h4>
+    <mat-chip-list [multiple]="true" >
+    <mat-chip (click)="filterByStatus(1)">REQUESTED</mat-chip>
+    <mat-chip (click)="filterByStatus(2) ">ACCEPTED</mat-chip>
+    <mat-chip (click)="filterByStatus(3) ">REJECTED</mat-chip>
+</mat-chip-list>
+ <button (click)="filterByStatus(null)">
+      <em>clear filter</em>
+    </button>
+<div *ngIf="aanvragen$ | async; let aanvragen; else loading">
+    <ul>
+      <li *ngFor="let aanvraag of aanvragen">
+        {{ aanvraag | json }}
+      </li>
+    </ul>
+    <div *ngIf="aanvragen.length === 0">No results, try clearing filters</div>
+  </div>
+  <ng-template #loading>Loading&hellip;</ng-template>
+
+  <div>

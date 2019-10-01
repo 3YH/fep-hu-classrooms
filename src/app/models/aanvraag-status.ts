@@ -1,5 +1,5 @@
 enum AanvraagStatus {
-    REQUESTED,
+    REQUESTED = 1,
     ACCEPTED,
     REJECTED
 }
