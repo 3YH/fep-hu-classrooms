@@ -4,13 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
-import {
-  MatCardModule
-} from '@angular/material/card';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
+import { MaterialImportModule } from './material-import.module';
 
 @NgModule({
   declarations: [
@@ -20,13 +19,13 @@ import { FirebaseConfiguration } from './config/firebase-configuration';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialImportModule,
 
     /* Firebase modules */
     AngularFireModule.initializeApp(FirebaseConfiguration),
     AngularFirestoreModule,
-
-    /* Material modules */
-    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
