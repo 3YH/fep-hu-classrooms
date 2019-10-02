@@ -1,55 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable, Subject } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-overzicht-aanvragen',
   templateUrl: './overzicht-aanvragen.component.html',
   styleUrls: ['./overzicht-aanvragen.component.scss']
 })
-export class OverzichtAanvragenComponent implements OnInit {
-  aanvragenCollection: AngularFirestoreCollection<Aanvraag>;
-  aanvragen$: Observable<Aanvraag[]>;
-  statusFilter$: BehaviorSubject<string|null>;
-  colorFilter$: BehaviorSubject<string|null>;
-  
-  constructor(afs: AngularFirestore) {
-    this.aanvragenCollection = afs.collection<Aanvraag>('aanvragen');
-    this.aanvragen = this.aanvragenCollection.valueChanges();
-    this.statusFilter$ = new BehaviorSubject(null);
-    this.aanvragen$ = combineLatest(
-      this.statusFilter$,
-    ).pipe(
-      switchMap(([status]) => 
-        afs.collection('aanvragen', ref => {
-          let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-          if (status) { query = query.where('status.aanvraagStatus', '==', status) };
-          return query;
-        }).valueChanges()
-      )
-    );
-  }
-  filterByStatus(status: string|null) {
-    this.statusFilter$.next(status); 
-  }
-  ngOnInit() {
-  }
+export class OverzichtAanvragenComponent implements OnInit, OnDestroy {
+  private onDestroy$: Subject<void> = new Subject<void>();
+  constructor(private afs: AngularFirestore) { }
+  public aanvragen: Observable<Aanvraag[]>;
+  private statusFilter$ = new Subject<string>();
 
-  anvr: Aanvraag = {
-    aanvraagId: "213", 
-    docentId: "213a", 
-    aanvragerId: "fe823", 
-    ruimteId: "2131a", 
-    status: "392A", 
-    startTijd: "12 uur", 
-    eindTijd: "2 uur", 
-    motivatie: "tst",
-    status: {aanvraagStatus: 1, toelichting: "test"}
+  public aanvraag1: Aanvraag = {
+    aanvraagId: '213',
+    docentId: '213a',
+    aanvragerId: 'fe823',
+    ruimteId: '2131a',
+    startTijd: '12 uur',
+    eindTijd: '2 uur',
+    motivatie: 'tst',
+    status: { aanvraagStatus: 1, toelichting: 'test' }
   };
 
-  addAanvraag(aanvraag: Aanvraag) {
-    return this.aanvragenCollection.add(aanvraag);
+  // private addAanvraag(aanvraag: Aanvraag) {
+  //   return this.aanvragen.add(aanvraag);
+  // }
+
+  private getAanvragen() {
+    this.aanvragen = this.afs.collection<Aanvraag>('aanvragen').valueChanges();
   }
 
+  private filterByStatus(event$) {
+    console.log(event$);
+    // if (status) {
+    //   this.statusFilter$.next(status);
+    // } else {
+    //   this.getAanvragen();
+    // }
+  }
+
+  public ngOnInit() {
+    this.getAanvragen();
+    this.statusFilter$ = new Subject();
+
+    const queryObservable = this.statusFilter$
+      .pipe(
+        takeUntil(this.onDestroy$),
+        switchMap((status: string) =>
+          this.aanvragen = this.afs
+            .collection<Aanvraag>(
+              'aanvragen', reference =>
+              reference.where('status.aanvraagStatus', '==', status))
+            .valueChanges()
+        ),
+      );
+
+    queryObservable.subscribe(queriedItems => {
+      console.log(queriedItems);
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.unsubscribe();
+  }
 }
