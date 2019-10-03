@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil} from 'rxjs/operators';
+import { MatChip } from '@angular/material';
 @Component({
   selector: 'app-overzicht-aanvragen',
   templateUrl: './overzicht-aanvragen.component.html',
@@ -32,13 +33,14 @@ export class OverzichtAanvragenComponent implements OnInit, OnDestroy {
     this.aanvragen = this.afs.collection<Aanvraag>('aanvragen').valueChanges();
   }
 
-  private filterByStatus(event$) {
-    console.log(event$);
-    // if (status) {
-    //   this.statusFilter$.next(status);
-    // } else {
-    //   this.getAanvragen();
-    // }
+  private filterByStatus(chip: MatChip, status) {
+    chip.toggleSelected();
+    console.log(chip);
+    if (chip.selected) {
+      this.statusFilter$.next(status);
+    } else {
+      this.getAanvragen();
+    }
   }
 
   public ngOnInit() {

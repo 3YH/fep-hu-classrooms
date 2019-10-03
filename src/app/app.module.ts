@@ -6,7 +6,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import {
   MatCardModule,
-  MatChipsModule
+  MatChipsModule,
+  MatIconModule
 } from '@angular/material/';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +30,7 @@ import { OverzichtAanvragenComponent } from './overzicht-aanvragen/overzicht-aan
     AngularFirestoreModule,
 
     /* Material modules */
+    MatIconModule,
     MatCardModule,
     MatChipsModule
   ],

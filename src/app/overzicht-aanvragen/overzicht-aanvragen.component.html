@@ -1,14 +1,13 @@
 <button mat-button (click)="addAanvraag(aanvraag1)">Click me!</button>
 
-<h4>Filter</h4>
-<mat-chip-list [selectable]="true">
-  <mat-chip id="requested" (click)="filterByStatus($event)">REQUESTED</mat-chip>
-  <mat-chip (click)="filterByStatus(2) ">ACCEPTED</mat-chip>
-  <mat-chip (click)="filterByStatus(3) ">REJECTED</mat-chip>
+<div class="select-status">
+<p>Selecteer status:</p>
+<mat-chip-list>
+  <mat-chip #requested="matChip" (click)="filterByStatus(requested, 1)"><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip>
+  <mat-chip #accepted="matChip" (click)="filterByStatus(accepted, 2)"><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip>
+  <mat-chip #rejected="matChip" (click)="filterByStatus(rejected, 3)"><mat-icon >event_busy</mat-icon>Afgewezen</mat-chip>
 </mat-chip-list>
-<button (click)="filterByStatus(null)">
-  <em>clear filter</em>
-</button>
+</div>
 <ul>
   <li *ngFor="let aanvraag of aanvragen | async">
     {{ aanvraag | json }}

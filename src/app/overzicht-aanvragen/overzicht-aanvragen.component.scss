@@ -1,0 +1,19 @@
+.select-status{
+    padding: 30px;
+    .mat-chip-list{
+        .mat-chip{
+            color: #2F76F4;
+            background-color: #fff;
+            border: 1px solid #ADC9FA;
+                .mat-icon{
+                    padding-right: 5px;
+                }   
+        }
+        .mat-chip-selected {
+            color: #2F76F4;
+            background-color: #E5EFFF;
+            border: 1px solid #93B3F9;
+        }
+        
+    }
+}
