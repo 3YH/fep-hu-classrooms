@@ -7,7 +7,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import {
   MatCardModule,
   MatChipsModule,
-  MatIconModule
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatExpansionModule
 } from '@angular/material/';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +34,9 @@ import { OverzichtAanvragenComponent } from './overzicht-aanvragen/overzicht-aan
     /* Material modules */
     MatIconModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
