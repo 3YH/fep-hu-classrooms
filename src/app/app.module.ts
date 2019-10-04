@@ -6,14 +6,17 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { QrreaderComponent } from './Component/qrreader/qrreader.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    QrreaderComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +25,7 @@ import { MaterialImportModule } from './material-import.module';
     FormsModule,
     ReactiveFormsModule,
     MaterialImportModule,
+    ZXingScannerModule,
 
     /* Firebase modules */
     AngularFireModule.initializeApp(FirebaseConfiguration),
