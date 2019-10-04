@@ -1,0 +1,24 @@
+<div id="expansion-panel" *ngFor="let aanvraag of aanvragen">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title id="title">
+        <div id="head-text">
+          {{aanvraag.startTijd}} - {{aanvraag.eindTijd}}
+        </div>
+
+        <div id="head-button">
+          <button mat-button>Goedkeuren <mat-icon>done</mat-icon> </button>
+          <button mat-button>Afkeuren <mat-icon>clear</mat-icon> </button>
+        </div>
+      </mat-panel-title>
+      <mat-panel-description id="desc">
+        {{aanvraag.aanvragerId}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{aanvraag.motivatie}}</p>
+    <br>
+    <button mat-button>Goedkeuren <mat-icon>done</mat-icon> </button>
+    <button mat-button>Afkeuren <mat-icon>clear</mat-icon> </button>
+
+  </mat-expansion-panel>
+</div>

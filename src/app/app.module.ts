@@ -10,10 +10,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
+import { AanvragenComponent } from './aanvragen/aanvragen.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AanvragenComponent
   ],
   imports: [
     BrowserModule,
