@@ -1,12 +1,9 @@
   <div class="filters">
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Results">
-          </mat-form-field>
   <p>Filter op aanvraagstatus</p>
   <mat-chip-list>
-    <mat-chip #requested="matChip" (click)="filterByStatus(requested, 0)"><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip>
-    <mat-chip #accepted="matChip" (click)="filterByStatus(accepted, 1)"><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip>
-    <mat-chip #rejected="matChip" (click)="filterByStatus(rejected, 2)"><mat-icon >event_busy</mat-icon>Afgewezen</mat-chip>
+    <mat-chip #requested="matChip" (click)="filterByStatus(requested, 'REQUESTED')"><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip>
+    <mat-chip #accepted="matChip" (click)="filterByStatus(accepted, 'ACCEPTED')"><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip>
+    <mat-chip #rejected="matChip" (click)="filterByStatus(rejected, 'REJECTED')"><mat-icon >event_busy</mat-icon>Afgewezen</mat-chip>
   </mat-chip-list>
  
 <mat-form-field>

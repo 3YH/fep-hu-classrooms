@@ -6,6 +6,7 @@ import {AanvraagService} from '../services/aanvraag.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatChip } from '@angular/material';
+import { WhereClause } from '../models/where-clause';
 
 @Component({
   selector: 'app-aanvragen',
@@ -21,16 +22,33 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
-  private statusFilter$ = new Subject<string>();
 
   constructor(private aanvraagService: AanvraagService) { }
 
+  
+
   public ngOnInit() {
-  this.getData();
+    const filterbyStatus: WhereClause = {fieldPath: 'status.aanvraagStatus', operator: '==', value: 'REQUESTED'};
+    return this.aanvraagService.getAanvragen(filterbyStatus)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(res => {
+      this.isLoading = false;
+      this.dataSource.data = res;
+    },
+    error => this.isLoading = false
+      );
   }
 
-  private getData() {
-    return this.aanvraagService.getAanvragen()
+  public filterByStatus(chip: MatChip, status: string) {
+    chip.toggleSelected();
+    if (chip.selected) {
+      this.getFilteredData(status);
+    }
+  }
+
+  private getFilteredData(status?: string) {
+    const filterbyStatus: WhereClause = {fieldPath: 'status.aanvraagStatus', operator: '==', value: status};
+    return this.aanvraagService.getAanvragen(filterbyStatus)
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(res => {
       this.isLoading = false;
@@ -47,16 +65,6 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
   public ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  public filterByStatus(chip: MatChip, status: string) {
-    chip.toggleSelected();
-    console.log(chip);
-    if (chip.selected) {
-      
-    } else {
-      this.getData();
-    }
   }
 
   private applyFilter(filterValue: string) {
