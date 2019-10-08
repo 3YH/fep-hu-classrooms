@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Aanvraag } from '../aanvraag';
-import { AanvragenService } from '../aanvragen.service';
+import { AanvraagService } from '../services/aanvraag.service';
 
 @Component({
   selector: 'app-aanvragen',
@@ -12,7 +11,7 @@ export class AanvragenComponent implements OnInit {
 
   public aanvragen: Aanvraag[] = [];
 
-  constructor(private aanvraagService: AanvragenService) { }
+  constructor(private aanvraagService: AanvraagService) { }
 
   public ngOnInit() {
     this.getAanvragen();
