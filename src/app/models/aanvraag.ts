@@ -8,7 +8,7 @@ interface Aanvraag {
     eindTijd: string;
     motivatie: string;
     status: {
-        aanvraagStatus: AanvraagStatus,
+        aanvraagStatus: 'REQUESTED' | 'ACCEPTED' | 'REJECTED',
         toelichting?: string
     };
 }
