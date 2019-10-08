@@ -1,25 +1,3 @@
-<!-- <button mat-button (click)="addAanvraag(aanvraag1)">Click me!</button> -->
 <div class="overzicht-aanvragen">
-  <div class="filter-status">
-<p>Filter op aanvraagstatus</p>
-<mat-chip-list>
-  <mat-chip #requested="matChip" (click)="filterByStatus(requested, 0)"><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip>
-  <mat-chip #accepted="matChip" (click)="filterByStatus(accepted, 1)"><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip>
-  <mat-chip #rejected="matChip" (click)="filterByStatus(rejected, 2)"><mat-icon >event_busy</mat-icon>Afgewezen</mat-chip>
-</mat-chip-list>
-</div>
-<div *ngIf="aanvragen | async; let aanvragen; else loading"></div>
-<ng-template #loading><mat-spinner [diameter]="65" [strokeWidth]="4"></mat-spinner></ng-template>
-<mat-accordion>
-    <mat-expansion-panel *ngFor="let aanvraag of aanvragen | async">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{aanvraag.aanvraagId}}
-        </mat-panel-title>
-        <mat-panel-description>
-            {{aanvraag.status.aanvraagStatus}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-    </mat-expansion-panel>
-  </mat-accordion>
+<app-aanvragen></app-aanvragen>
 </div>
