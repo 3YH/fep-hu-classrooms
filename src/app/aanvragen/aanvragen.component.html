@@ -34,16 +34,32 @@
 </div>
 <div class="aanvragen-table">
   <mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="aanvraagId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{ row.aanvraagId }} </mat-cell>
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i = index">
+        {{ [i + 1 + paginator.pageIndex * paginator.pageSize] }}
+      </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="ruimteId">
+    <ng-container matColumnDef="aanvragerId">
       <mat-header-cell *matHeaderCellDef mat-sort-header
-        >Ruimte</mat-header-cell
+        >Aanvrager</mat-header-cell
       >
-      <mat-cell *matCellDef="let row"> {{ row.ruimteId }} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{ row.aanvragerId }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startTijd">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Starttijd</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.startTijd }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="eindTijd">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Eindtijd</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.eindTijd }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="aanvraagStatus">
@@ -57,7 +73,7 @@
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row
-      *matRowDef="let row; columns: displayedColumns"
+      *matRowDef="let row; columns: displayedColumns; let i = index"
       (click)="selectAanvraag()"
     ></mat-row>
   </mat-table>

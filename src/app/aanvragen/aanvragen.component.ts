@@ -24,7 +24,13 @@ import { ExampleDialogComponent } from "../example-dialog/example-dialog.compone
 export class AanvragenComponent implements AfterViewInit, OnInit {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
-  public displayedColumns = ["aanvraagId", "ruimteId", "aanvraagStatus"];
+  public displayedColumns = [
+    "index",
+    "aanvragerId",
+    "startTijd",
+    "eindTijd",
+    "aanvraagStatus"
+  ];
   public isLoading = true;
   public members;
 
@@ -99,6 +105,7 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
   }
 
   public ngOnDestroy(): void {
-    this.onDestroy$.unsubscribe();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 }
