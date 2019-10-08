@@ -1,13 +1,20 @@
-
-.overzicht-aanvragen {
-  padding: 30px;
-  .filter-status {
-    padding-bottom: 30px;
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 30px;
+  .status {
+    padding-right: 30px;
     .mat-chip-list {
       .mat-chip {
         color: #2f76f4;
         background-color: #fff;
         border: 1px solid #adc9fa;
+        &::after {
+          background-color: #e5efff;
+          background-color: #e5efff;
+          border: 1px solid #93b3f9;
+        }
         .mat-icon {
           padding-right: 5px;
         }
@@ -19,8 +26,20 @@
       }
     }
   }
+  .search {
+    padding-top: 35px;
+  }
+}
+.aanvragen-table {
+  .mat-table {
+    .mat-row {
+      &:hover {
+        cursor: pointer;
+        background-color: #f5f5f5;
+      }
+    }
+  }
   .mat-spinner {
     margin: 0 auto;
   }
 }
-

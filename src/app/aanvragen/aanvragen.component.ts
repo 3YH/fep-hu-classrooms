@@ -1,60 +1,78 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import {AanvraagService} from '../services/aanvraag.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { MatChip } from '@angular/material';
-import { WhereClause } from '../models/where-clause';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  Inject
+} from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { AanvraagService } from "../services/aanvraag.service";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { MatChip } from "@angular/material";
+import { WhereClause } from "../models/where-clause";
+import { MatDialog } from "@angular/material/dialog";
+import { ExampleDialogComponent } from "../example-dialog/example-dialog.component";
 
 @Component({
-  selector: 'app-aanvragen',
-  templateUrl: './aanvragen.component.html',
-  styleUrls: ['./aanvragen.component.scss']
+  selector: "app-aanvragen",
+  templateUrl: "./aanvragen.component.html",
+  styleUrls: ["./aanvragen.component.scss"]
 })
 export class AanvragenComponent implements AfterViewInit, OnInit {
   public onDestroy$: Subject<void> = new Subject<void>();
-  public displayedColumns = ['aanvraagId', 'docentId', 'aanvraagStatus'];
   public dataSource = new MatTableDataSource();
+  public displayedColumns = ["aanvraagId", "ruimteId", "aanvraagStatus"];
   public isLoading = true;
   public members;
 
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
 
-  constructor(private aanvraagService: AanvraagService) { }
-
-  
+  constructor(
+    private aanvraagService: AanvraagService,
+    public dialog: MatDialog
+  ) {}
 
   public ngOnInit() {
-    const filterbyStatus: WhereClause = {fieldPath: 'status.aanvraagStatus', operator: '==', value: 'REQUESTED'};
-    return this.aanvraagService.getAanvragen(filterbyStatus)
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(res => {
-      this.isLoading = false;
-      this.dataSource.data = res;
-    },
-    error => this.isLoading = false
-      );
+    this.getFilteredData("REQUESTED");
   }
 
   public filterByStatus(chip: MatChip, status: string) {
     chip.toggleSelected();
     if (chip.selected) {
       this.getFilteredData(status);
+    } else {
+      return this.aanvraagService
+        .getAanvragen()
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(
+          res => {
+            this.isLoading = false;
+            this.dataSource.data = res;
+          },
+          error => (this.isLoading = false)
+        );
     }
   }
 
   private getFilteredData(status?: string) {
-    const filterbyStatus: WhereClause = {fieldPath: 'status.aanvraagStatus', operator: '==', value: status};
-    return this.aanvraagService.getAanvragen(filterbyStatus)
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(res => {
-      this.isLoading = false;
-      this.dataSource.data = res;
-    },
-    error => this.isLoading = false
+    const filterbyStatus: WhereClause = {
+      fieldPath: "status.aanvraagStatus",
+      operator: "==",
+      value: status
+    };
+    return this.aanvraagService
+      .getAanvragen(filterbyStatus)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(
+        res => {
+          this.isLoading = false;
+          this.dataSource.data = res;
+        },
+        error => (this.isLoading = false)
       );
   }
 
@@ -73,7 +91,14 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  public selectAanvraag() {
+    const dialogRef = this.dialog.open(ExampleDialogComponent, {
+      height: "400px",
+      width: "400px"
+    });
+  }
+
   public ngOnDestroy(): void {
     this.onDestroy$.unsubscribe();
-    }
+  }
 }

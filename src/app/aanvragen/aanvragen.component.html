@@ -1,44 +1,84 @@
-  <div class="filters">
-  <p>Filter op aanvraagstatus</p>
-  <mat-chip-list>
-    <mat-chip #requested="matChip" (click)="filterByStatus(requested, 'REQUESTED')"><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip>
-    <mat-chip #accepted="matChip" (click)="filterByStatus(accepted, 'ACCEPTED')"><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip>
-    <mat-chip #rejected="matChip" (click)="filterByStatus(rejected, 'REJECTED')"><mat-icon >event_busy</mat-icon>Afgewezen</mat-chip>
-  </mat-chip-list>
- 
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Results">
-</mat-form-field>
+<div class="filters">
+  <div class="status">
+    <p>Filter op aanvraagstatus</p>
+    <mat-chip-list>
+      <mat-chip
+        [selected]="0"
+        #requested="matChip"
+        (click)="filterByStatus(requested, 'REQUESTED')"
+        ><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip
+      >
+      <mat-chip
+        #accepted="matChip"
+        (click)="filterByStatus(accepted, 'ACCEPTED')"
+        ><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip
+      >
+      <mat-chip
+        #rejected="matChip"
+        (click)="filterByStatus(rejected, 'REJECTED')"
+        ><mat-icon>event_busy</mat-icon>Afgewezen</mat-chip
+      >
+    </mat-chip-list>
+  </div>
+  <div class="search">
+    <mat-form-field appearance="outline">
+      <mat-label>Zoek op aavraag</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="zoeken"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
 </div>
-      <mat-table [dataSource]="dataSource" matSort>
-          <ng-container matColumnDef="aanvraagId">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>YR</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.aanvraagId}} </mat-cell>
-          </ng-container>
+<div class="aanvragen-table">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="aanvraagId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.aanvraagId }} </mat-cell>
+    </ng-container>
 
-          <ng-container matColumnDef="docentId">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Grade</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.docentId}} </mat-cell>
-          </ng-container>
+    <ng-container matColumnDef="ruimteId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Ruimte</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.ruimteId }} </mat-cell>
+    </ng-container>
 
-          <ng-container matColumnDef="aanvraagStatus">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Grade</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.status.aanvraagStatus}} </mat-cell>
-            </ng-container>
+    <ng-container matColumnDef="aanvraagStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Status</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        {{ row.status.aanvraagStatus }}
+      </mat-cell>
+    </ng-container>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-card *ngIf="isLoading" 
-   style="display: flex; justify-content: center; align-items: center">
-  <mat-progress-spinner 
-    color="primary" 
-    mode="indeterminate">
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="selectAanvraag()"
+    ></mat-row>
+  </mat-table>
+</div>
+<mat-card
+  *ngIf="isLoading"
+  style="display: flex; justify-content: center; align-items: center"
+>
+  <mat-progress-spinner
+    strokeWidth="4"
+    diameter="60"
+    color="primary"
+    mode="indeterminate"
+  >
   </mat-progress-spinner>
 </mat-card>
-      <mat-paginator #paginator
-              [length]="dataSource.filteredData.length"
-              [pageIndex]="0"
-              [pageSize]="5"
-              [pageSizeOptions]="[5, 10, 25, 100]">
-      </mat-paginator>
+<mat-paginator
+  #paginator
+  [length]="dataSource.filteredData.length"
+  [pageIndex]="0"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+>
+</mat-paginator>
