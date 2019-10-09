@@ -1,36 +1,55 @@
 import { NgModule } from '@angular/core';
 import {
+  MatButtonModule,
+  MatCardModule,
+  MatCommonModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatInputModule,
+  MatLineModule,
+  MatListModule,
+  MatMenuModule,
+  MatRippleModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
+@NgModule({
+  imports: [
     MatButtonModule,
     MatCardModule,
+    MatCommonModule,
     MatExpansionModule,
     MatIconModule,
     MatInputModule,
+    MatLineModule,
+    MatListModule,
+    MatMenuModule,
     MatRippleModule,
+    MatSidenavModule,
     MatSnackBarModule,
     MatStepperModule,
-    MatTooltipModule,
-} from '@angular/material';
-@NgModule({
-    imports: [
-        MatButtonModule,
-        MatCardModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatInputModule,
-        MatRippleModule,
-        MatSnackBarModule,
-        MatTooltipModule,
-    ],
-    exports: [
-        MatButtonModule,
-        MatCardModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatInputModule,
-        MatRippleModule,
-        MatSnackBarModule,
-        MatStepperModule,
-        MatTooltipModule,
-    ],
+    MatToolbarModule,
+    MatTooltipModule
+  ],
+  exports: [
+    MatButtonModule,
+    MatCardModule,
+    MatCommonModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatInputModule,
+    MatLineModule,
+    MatListModule,
+    MatMenuModule,
+    MatRippleModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatStepperModule,
+    MatToolbarModule,
+    MatTooltipModule
+  ]
 })
-export class MaterialImportModule { }
+export class MaterialImportModule {}
