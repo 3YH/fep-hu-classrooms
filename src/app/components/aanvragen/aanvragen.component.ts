@@ -1,27 +1,27 @@
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
-  ViewChild,
-  Inject
+  ViewChild
 } from "@angular/core";
+import { MatChip } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { AanvraagService } from "../services/aanvraag.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { MatChip } from "@angular/material";
-import { WhereClause } from "../models/where-clause";
-import { MatDialog } from "@angular/material/dialog";
-import { exampledialogComponent } from "../example-dialog/example-dialog.component";
+import { WhereClause } from "../../models/where-clause";
+import { AanvraagService } from "../../services/aanvraag.service";
+import { ExampleDialogComponent } from "../example-dialog/example-dialog.component";
 
 @Component({
   selector: "app-aanvragen",
   templateUrl: "./aanvragen.component.html",
   styleUrls: ["./aanvragen.component.scss"]
 })
-export class AanvragenComponent implements AfterViewInit, OnInit {
+export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
   public displayedColumns = [
@@ -55,9 +55,9 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
         .getAanvragen()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe(
-          res => {
+          (result: Aanvraag[]) => {
             this.isLoading = false;
-            this.dataSource.data = res;
+            this.dataSource.data = result;
           },
           error => (this.isLoading = false)
         );
@@ -92,13 +92,13 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
   }
 
   private applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
   public selectAanvraag() {
-    const dialogRef = this.dialog.open(exampledialogComponent, {
+    const dialogRef = this.dialog.open(ExampleDialogComponent, {
       height: "400px",
       width: "400px"
     });
