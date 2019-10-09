@@ -30,7 +30,7 @@ import { MaterialImportModule } from "./material-import.module";
     ExampleDialogComponent,
     AanvragenComponent
   ],
-  entryComponents: [exampledialogComponent],
+  entryComponents: [ExampleDialogComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
