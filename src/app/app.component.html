@@ -1,7 +1,4 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <h1>{{title}}</h1>
-    </mat-card-title>
-  </mat-card-header>
-</mat-card>
+<app-primary-toolbar [title]="appTitle"></app-primary-toolbar>
+<div>
+  <router-outlet></router-outlet>
+</div>

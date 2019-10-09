@@ -11,8 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { MailRegistratieComponent } from './components/mail-registratie/mail-registratie.component';
+import { OverzichtAanvraagComponent } from './components/overzicht-aanvraag/overzicht-aanvraag.component';
 import { PrimaryToolbarComponent } from './components/primary-toolbar/primary-toolbar.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
@@ -22,7 +24,9 @@ import { MaterialImportModule } from './material-import.module';
     AppComponent,
     LoginComponent,
     PrimaryToolbarComponent,
-    MailRegistratieComponent
+    MailRegistratieComponent,
+    DashboardComponent,
+    OverzichtAanvraagComponent
   ],
   imports: [
     HttpClientModule,
@@ -37,6 +41,7 @@ import { MaterialImportModule } from './material-import.module';
     AngularFireModule.initializeApp(FirebaseConfiguration),
     AngularFireAuthModule,
     AngularFirestoreModule,
+
     LayoutModule
   ],
   providers: [],
