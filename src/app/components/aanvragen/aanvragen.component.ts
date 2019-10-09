@@ -1,35 +1,35 @@
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
-  ViewChild,
-  Inject
-} from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { AanvraagService } from "../services/aanvraag.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { MatChip } from "@angular/material";
-import { WhereClause } from "../models/where-clause";
-import { MatDialog } from "@angular/material/dialog";
-import { ExampleDialogComponent } from "../example-dialog/example-dialog.component";
+  ViewChild
+} from '@angular/core';
+import { MatChip } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { WhereClause } from '../../models/where-clause';
+import { AanvraagService } from '../../services/aanvraag.service';
+import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
 
 @Component({
-  selector: "app-aanvragen",
-  templateUrl: "./aanvragen.component.html",
-  styleUrls: ["./aanvragen.component.scss"]
+  selector: 'app-aanvragen',
+  templateUrl: './aanvragen.component.html',
+  styleUrls: ['./aanvragen.component.scss']
 })
-export class AanvragenComponent implements AfterViewInit, OnInit {
+export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
   public displayedColumns = [
-    "index",
-    "aanvragerId",
-    "startTijd",
-    "eindTijd",
-    "aanvraagStatus"
+    'index',
+    'aanvragerId',
+    'startTijd',
+    'eindTijd',
+    'aanvraagStatus'
   ];
   public isLoading = true;
   public members;
@@ -43,7 +43,7 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
   ) {}
 
   public ngOnInit() {
-    this.getFilteredData("REQUESTED");
+    this.getFilteredData('REQUESTED');
   }
 
   public filterByStatus(chip: MatChip, status: string) {
@@ -55,9 +55,9 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
         .getAanvragen()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe(
-          res => {
+          (result: Aanvraag[]) => {
             this.isLoading = false;
-            this.dataSource.data = res;
+            this.dataSource.data = result;
           },
           error => (this.isLoading = false)
         );
@@ -66,8 +66,8 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
 
   private getFilteredData(status?: string) {
     const filterbyStatus: WhereClause = {
-      fieldPath: "status.aanvraagStatus",
-      operator: "==",
+      fieldPath: 'status.aanvraagStatus',
+      operator: '==',
       value: status
     };
     return this.aanvraagService
@@ -92,15 +92,15 @@ export class AanvragenComponent implements AfterViewInit, OnInit {
   }
 
   private applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
   public selectAanvraag() {
     const dialogRef = this.dialog.open(ExampleDialogComponent, {
-      height: "400px",
-      width: "400px"
+      height: '400px',
+      width: '400px'
     });
   }
 
