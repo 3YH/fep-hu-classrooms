@@ -1,23 +1,23 @@
 <div id="scroll-div">
   <div id="expansion-panel" *ngFor="let aanvraag of aanvragen">
-    <mat-expansion-panel>
+    <mat-expansion-panel id="expansion" (opened)="panelState = false" (closed)="panelState = true">
       <mat-expansion-panel-header>
         <mat-panel-title id="title">
           <div id="head-text">
             {{aanvraag.startTijd}} - {{aanvraag.eindTijd}}
           </div>
 
-          <div id="head-button">
+          <!-- <div id="head-button" [hidden]="!panelState">
             <button mat-button>Goedkeuren <mat-icon>done</mat-icon> </button>
             <button mat-button>Afkeuren <mat-icon>clear</mat-icon> </button>
-          </div>
+          </div> -->
         </mat-panel-title>
         <mat-panel-description id="desc">
           {{aanvraag.aanvragerId}}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div>
-        <p>{{aanvraag.motivatie}}</p>
+        <p>Motivatie: {{aanvraag.motivatie}}</p>
         <br>
         <button mat-button>Goedkeuren <mat-icon>done</mat-icon> </button>
         <button mat-button>Afkeuren <mat-icon>clear</mat-icon> </button>
