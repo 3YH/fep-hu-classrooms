@@ -9,6 +9,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AanvragenComponent } from './aanvragen/aanvragen.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -17,7 +18,9 @@ import { MailRegistratieComponent } from './components/mail-registratie/mail-reg
 import { OverzichtAanvraagComponent } from './components/overzicht-aanvraag/overzicht-aanvraag.component';
 import { PrimaryToolbarComponent } from './components/primary-toolbar/primary-toolbar.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
+import { ExampleDialogComponent } from './example-dialog/example-dialog.component';
 import { MaterialImportModule } from './material-import.module';
+import { OverzichtAanvragenComponent } from './overzicht-aanvragen/overzicht-aanvragen.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +29,12 @@ import { MaterialImportModule } from './material-import.module';
     PrimaryToolbarComponent,
     MailRegistratieComponent,
     DashboardComponent,
-    OverzichtAanvraagComponent
+    OverzichtAanvraagComponent,
+    OverzichtAanvragenComponent,
+    AanvragenComponent,
+    ExampleDialogComponent
   ],
+  entryComponents: [ExampleDialogComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
