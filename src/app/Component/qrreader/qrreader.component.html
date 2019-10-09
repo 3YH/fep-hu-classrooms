@@ -1,25 +1,26 @@
 <!-- WEBCAM ACCESS -->
 <div class="camera">
-    <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
+    <zxing-scanner (scanSuccess)="scanSuccessHandler($event)">
+    </zxing-scanner>
 </div>
 <!-- QR GENERATOR -->
 <div>
-
-    <!-- <ngx-kjua [text]="user | json " [renderAsync]="false" [cssClass]="'image-auto'" [size]="400"></ngx-kjua> -->
+    <!-- <button mat-button (click)="openSomething()">KLIK</button> -->
 </div>
 <div>
-    <div *ngIf="selectedAanvraag">
-        <h4>Gevonden aanvraag</h4>
-        <ul>
-            <li>id: {{selectedAanvraag.aanvraagId}}</li>
-            <li>ruimte: {{selectedAanvraag.ruimteId}}</li>
-            <li>starttijd: {{selectedAanvraag.startTijd}}</li>
-            <li>eindtijd: {{selectedAanvraag.eindTijd}}</li>
-        </ul>
-        <div class="toegangDiv" *ngIf="toegang; else notShow">
-            Toegang!
+    <div class="toegangDiv" *ngIf="toegang; else notShow">
+        <div *ngIf="selectedAanvraag">
+            <h4>Gevonden aanvraag</h4>
+            <ul>
+                <li>id: {{selectedAanvraag.aanvraagId}}</li>
+                <li>ruimte: {{selectedAanvraag.ruimteId}}</li>
+                <li>starttijd: {{selectedAanvraag.startTijd}}</li>
+                <li>eindtijd: {{selectedAanvraag.eindTijd}}</li>
+            </ul>
+            <p>
+                Toegang!
+            </p>
         </div>
-
         <ng-template #notShow>
             <div class="geenToegangDiv">
                 <p>
