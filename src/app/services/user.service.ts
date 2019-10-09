@@ -8,22 +8,23 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(
-    private angularFirestore: AngularFirestore,
-  ) { }
+  constructor(private angularFirestore: AngularFirestore) {}
 
   public getUser(userUID: string): Observable<User[]> {
     if (isNullOrUndefined(userUID)) {
       return of([]);
     } else {
       return this.angularFirestore
-        .collection<User>('users', (reference: Query) => reference.where('uid', '==', userUID))
+        .collection<User>('users', (reference: Query) =>
+          reference.where('uid', '==', userUID)
+        )
         .valueChanges();
     }
   }
 
   public async addUser(userUid: string): Promise<void> {
-    await this.angularFirestore.collection('users').add({ uid: userUid } as User);
+    await this.angularFirestore
+      .collection('users')
+      .add({ uid: userUid } as User);
   }
 }

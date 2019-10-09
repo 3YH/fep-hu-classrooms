@@ -37,7 +37,7 @@
     <ng-container matColumnDef="index">
       <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
       <mat-cell *matCellDef="let row; let i = index">
-        {{ [i + 1 + paginator.pageIndex * paginator.pageSize] }}
+        {{ [i + 1 + paginator.pageIndex * paginator?.pageSize] }}
       </mat-cell>
     </ng-container>
 
@@ -45,21 +45,21 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Aanvrager</mat-header-cell
       >
-      <mat-cell *matCellDef="let row"> {{ row.aanvragerId }} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{ row?.aanvragerId }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="startTijd">
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Starttijd</mat-header-cell
       >
-      <mat-cell *matCellDef="let row"> {{ row.startTijd }} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{ row?.startTijd }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="eindTijd">
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Eindtijd</mat-header-cell
       >
-      <mat-cell *matCellDef="let row"> {{ row.eindTijd }} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{ row?.eindTijd }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="aanvraagStatus">
@@ -67,7 +67,7 @@
         >Status</mat-header-cell
       >
       <mat-cell *matCellDef="let row">
-        {{ row.status.aanvraagStatus }}
+        {{ row?.status?.aanvraagStatus }}
       </mat-cell>
     </ng-container>
 

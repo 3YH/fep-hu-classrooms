@@ -23,16 +23,15 @@ import { ExampleDialogComponent } from '../example-dialog/example-dialog.compone
 })
 export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
-  public dataSource = new MatTableDataSource();
-  public displayedColumns = [
+  public dataSource: MatTableDataSource<unknown> = new MatTableDataSource();
+  public displayedColumns: string[] = [
     'index',
     'aanvragerId',
     'startTijd',
     'eindTijd',
     'aanvraagStatus'
   ];
-  public isLoading = true;
-  public members;
+  public isLoading: boolean = true;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
@@ -42,16 +41,16 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     public dialog: MatDialog
   ) {}
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.getFilteredData('REQUESTED');
   }
 
-  public filterByStatus(chip: MatChip, status: string) {
+  public filterByStatus(chip: MatChip, status: string): void {
     chip.toggleSelected();
     if (chip.selected) {
       this.getFilteredData(status);
     } else {
-      return this.aanvraagService
+      this.aanvraagService
         .getAanvragen()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe(
@@ -64,13 +63,13 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  private getFilteredData(status?: string) {
+  private getFilteredData(status?: string): void {
     const filterbyStatus: WhereClause = {
       fieldPath: 'status.aanvraagStatus',
       operator: '==',
       value: status
     };
-    return this.aanvraagService
+    this.aanvraagService
       .getAanvragen(filterbyStatus)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(
@@ -86,19 +85,19 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  private applyFilter(filterValue: string) {
+  public applyFilter(filterValue: string): void {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
-  public selectAanvraag() {
-    const dialogRef = this.dialog.open(ExampleDialogComponent, {
+  public selectAanvraag(): void {
+    this.dialog.open(ExampleDialogComponent, {
       height: '400px',
       width: '400px'
     });

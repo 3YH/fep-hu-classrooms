@@ -1,3 +1,3 @@
 interface Ruimte {
-    ruimteId: string;
+  ruimteId: string;
 }

@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AanvraagFormComponent } from './components/aanvraag-form/aanvraag-form.component';
 import { AanvragenComponent } from './components/aanvragen/aanvragen.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ExampleDialogComponent } from './components/example-dialog/example-dialog.component';
@@ -28,7 +29,8 @@ import { MaterialImportModule } from './material-import.module';
     DashboardComponent,
     OverzichtAanvragenComponent,
     ExampleDialogComponent,
-    AanvragenComponent
+    AanvragenComponent,
+    AanvraagFormComponent
   ],
   entryComponents: [ExampleDialogComponent],
   imports: [

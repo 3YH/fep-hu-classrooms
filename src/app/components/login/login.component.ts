@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.authenticationService.getCurrentUserInfo().subscribe((user: User) => {
       if (!isNullOrUndefined(user)) {
         this.router.navigate(['dashboard']);

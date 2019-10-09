@@ -61,7 +61,7 @@ export class AuthenticationService implements OnDestroy {
   /**
    * Voegt een nieuwe gebruiker toe aan de users collectie.
    */
-  public addCurrentUser() {
+  public addCurrentUser(): void {
     this.firebaseAuthentication.user
       .pipe(
         takeUntil(this.onDestroy$),

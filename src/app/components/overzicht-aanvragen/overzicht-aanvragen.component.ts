@@ -13,9 +13,9 @@ export class OverzichtAanvragenComponent implements OnInit, OnDestroy {
 
   constructor(public dialog: MatDialog) {}
 
-  public ngOnInit() {}
+  public ngOnInit(): void {}
 
-  public addAanvraag() {
+  public addAanvraag(): void {
     this.dialog.open(ExampleDialogComponent, {
       height: '400px',
       width: '400px'

@@ -10,14 +10,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<void> = new Subject<void>();
-  public mailIsValidated = false;
+  public mailIsValidated: boolean = false;
 
   constructor(private authenticationService: AuthenticationService) {}
 
   /**
    * Als je ingelogd bent zonder valide HU-mail, dan moet je deze eerst registreren.
    */
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.authenticationService
       .isUserHuMailVerified()
       .pipe(
