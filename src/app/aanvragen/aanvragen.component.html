@@ -1,27 +1,100 @@
-<div id="scroll-div">
-  <div id="expansion-panel" *ngFor="let aanvraag of aanvragen">
-    <mat-expansion-panel id="expansion" (opened)="panelState = false" (closed)="panelState = true">
-      <mat-expansion-panel-header>
-        <mat-panel-title id="title">
-          <div id="head-text">
-            {{aanvraag.startTijd}} - {{aanvraag.eindTijd}}
-          </div>
-
-          <!-- <div id="head-button" [hidden]="!panelState">
-            <button mat-button>Goedkeuren <mat-icon>done</mat-icon> </button>
-            <button mat-button>Afkeuren <mat-icon>clear</mat-icon> </button>
-          </div> -->
-        </mat-panel-title>
-        <mat-panel-description id="desc">
-          {{aanvraag.aanvragerId}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div>
-        <p>Motivatie: {{aanvraag.motivatie}}</p>
-        <br>
-        <button mat-button>Goedkeuren <mat-icon>done</mat-icon> </button>
-        <button mat-button>Afkeuren <mat-icon>clear</mat-icon> </button>
-      </div>
-    </mat-expansion-panel>
+<div class="filters">
+  <div class="status">
+    <p>Filter op aanvraagstatus</p>
+    <mat-chip-list>
+      <mat-chip
+        [selected]="0"
+        #requested="matChip"
+        (click)="filterByStatus(requested, 'REQUESTED')"
+        ><mat-icon>event_out</mat-icon>Aangevraagd</mat-chip
+      >
+      <mat-chip
+        #accepted="matChip"
+        (click)="filterByStatus(accepted, 'ACCEPTED')"
+        ><mat-icon>event_available</mat-icon>Geaccepteerd</mat-chip
+      >
+      <mat-chip
+        #rejected="matChip"
+        (click)="filterByStatus(rejected, 'REJECTED')"
+        ><mat-icon>event_busy</mat-icon>Afgewezen</mat-chip
+      >
+    </mat-chip-list>
+  </div>
+  <div class="search">
+    <mat-form-field appearance="outline">
+      <mat-label>Zoek op aavraag</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="zoeken"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
   </div>
 </div>
+<div class="aanvragen-table">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i = index">
+        {{ [i + 1 + paginator.pageIndex * paginator.pageSize] }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="aanvragerId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Aanvrager</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.aanvragerId }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startTijd">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Starttijd</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.startTijd }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="eindTijd">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Eindtijd</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.eindTijd }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="aanvraagStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Status</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        {{ row.status.aanvraagStatus }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns; let i = index"
+      (click)="selectAanvraag()"
+    ></mat-row>
+  </mat-table>
+</div>
+<mat-card
+  *ngIf="isLoading"
+  style="display: flex; justify-content: center; align-items: center"
+>
+  <mat-progress-spinner
+    strokeWidth="4"
+    diameter="60"
+    color="primary"
+    mode="indeterminate"
+  >
+  </mat-progress-spinner>
+</mat-card>
+<mat-paginator
+  #paginator
+  [length]="dataSource.filteredData.length"
+  [pageIndex]="0"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+>
+</mat-paginator>
