@@ -1,3 +1,15 @@
 mat-card {
-    display: inline-flex;
+  display: inline-flex;
+}
+
+mat-toolbar {
+  width: 100%;
+}
+
+mat-toolbar-row {
+  justify-content: space-between;
+}
+
+* {
+  background: #e5e5e5;
 }
