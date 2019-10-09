@@ -1,0 +1,17 @@
+mat-card {
+  display: inline-flex;
+}
+
+mat-toolbar {
+  width: 100%;
+}
+
+mat-menu {
+  button {
+    justify-items: space-between;
+
+    mat-icon {
+      width: 100%;
+    }
+  }
+}
