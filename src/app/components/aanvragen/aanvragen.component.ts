@@ -57,6 +57,7 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public hasRole() {
     return this.authenticationService
       .getCurrentUserInfo()
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe((user: User) => {
         user.role === "student" && (this.isStudent = true);
         user.role === "docent" && (this.isDocent = true);
