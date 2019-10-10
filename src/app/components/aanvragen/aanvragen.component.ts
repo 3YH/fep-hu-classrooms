@@ -24,6 +24,7 @@ import { ExampleDialogComponent } from '../example-dialog/example-dialog.compone
 export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
+  public MyAanvraag: Aanvraag;
   public displayedColumns = [
     'index',
     'aanvragerId',
@@ -33,6 +34,7 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   ];
   public isLoading = true;
   public members;
+  public isDocent = false;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
@@ -97,11 +99,31 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.filter = filterValue;
   }
 
-  public selectAanvraag() {
-    const dialogRef = this.dialog.open(ExampleDialogComponent, {
-      height: '400px',
-      width: '400px'
-    });
+  public selectAanvraag(id: string) {
+    this.aanvraagService
+      .getAanvraagById(id)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((aanvraag: Aanvraag[]) => {
+        aanvraag.forEach(element => {
+          this.MyAanvraag = element;
+        });
+        const dialogRef = this.dialog.open(ExampleDialogComponent, {
+          height: '550px',
+          width: '550px',
+          data: {
+            AanvraagId: this.MyAanvraag.aanvraagId,
+            AanvragerId: this.MyAanvraag.aanvragerId,
+            DocentId: this.MyAanvraag.docentId,
+            StartTijd: this.MyAanvraag.startTijd,
+            EindTijd: this.MyAanvraag.eindTijd,
+            Motivatie: this.MyAanvraag.motivatie,
+            RuimteId: this.MyAanvraag.ruimteId,
+            QrCode: this.MyAanvraag.qrCode,
+            Status: this.MyAanvraag.status.aanvraagStatus,
+            Toelichting: this.MyAanvraag.status.toelichting
+          }
+        });
+      });
   }
 
   public ngOnDestroy(): void {
