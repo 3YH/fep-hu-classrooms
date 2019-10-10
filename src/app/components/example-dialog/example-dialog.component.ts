@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AanvraagService } from '../../services/aanvraag.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/models/user';
 
 export interface data {
   AanvraagId?: string;
@@ -26,17 +28,19 @@ export class ExampleDialogComponent implements OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public MyAanvraag: Aanvraag;
   public aanvraagString: string;
+  public isDocent = false;
   constructor(
     public dialogRef: MatDialogRef<ExampleDialogComponent>,
     private aanvraagService: AanvraagService,
+    private authenticationService: AuthenticationService,
     @Inject(MAT_DIALOG_DATA) public data: data
-  ) { }
+  ) {}
 
   public onNoClick(): void {
     this.dialogRef.close();
   }
 
-  public ngOnInit() { }
+  public ngOnInit() {}
 
   public showButtons(): boolean {
     if (this.data.Status === 'REQUESTED') {
@@ -86,13 +90,28 @@ export class ExampleDialogComponent implements OnInit, OnDestroy {
   }
 
   public generateQRString(aanvraagID: string) {
-    this.aanvraagService.getAanvraagById(aanvraagID)
+    this.aanvraagService
+      .getAanvraagById(aanvraagID)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((aanvragen: Aanvraag[]) => {
         this.MyAanvraag = aanvragen[0];
-        this.aanvraagString = '{"Aanvraagid":"' + this.MyAanvraag.aanvraagId + '", "uid":"' + this.MyAanvraag.aanvragerId + '"}';
+        this.aanvraagString =
+          '{"Aanvraagid":"' +
+          this.MyAanvraag.aanvraagId +
+          '", "uid":"' +
+          this.MyAanvraag.aanvragerId +
+          '"}';
       });
-    }
+  }
+
+  public hasRole() {
+    return this.authenticationService
+      .getCurrentUserInfo()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((user: User) => {
+        user.role === 'docent' && (this.isDocent = true);
+      });
+  }
 
   public ngOnDestroy(): void {
     this.onDestroy$.next();

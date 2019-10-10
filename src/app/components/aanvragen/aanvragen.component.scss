@@ -1,8 +1,12 @@
+@import '~sass-mq/_mq.scss';
 .filters {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 30px;
+  @include mq($until: tablet) {
+    flex-direction: column;
+  }
   .status {
     padding-right: 30px;
     .mat-chip-list {
@@ -28,9 +32,17 @@
   }
   .search {
     padding-top: 35px;
+    @include mq($until: tablet) {
+      padding-top: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }
 .aanvragen-table {
+  height: 66vh;
+  overflow: auto;
   .mat-table {
     .mat-row {
       &:hover {
@@ -42,4 +54,7 @@
   .mat-spinner {
     margin: 0 auto;
   }
+}
+.pagination {
+  padding-right: 80px;
 }

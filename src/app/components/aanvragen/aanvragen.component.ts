@@ -15,8 +15,6 @@ import { takeUntil } from 'rxjs/operators';
 import { WhereClause } from '../../models/where-clause';
 import { AanvraagService } from '../../services/aanvraag.service';
 import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-aanvragen',
@@ -36,33 +34,18 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   ];
   public isLoading = true;
   public members;
-  public isStudent = false;
   public isDocent = false;
-  public isScanner = false;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
 
   constructor(
-    private authenticationService: AuthenticationService,
     private aanvraagService: AanvraagService,
     public dialog: MatDialog
   ) {}
 
   public ngOnInit() {
-    this.hasRole();
     this.getFilteredData('REQUESTED');
-  }
-
-  public hasRole() {
-    return this.authenticationService
-      .getCurrentUserInfo()
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((user: User) => {
-        user.role === 'student' && (this.isStudent = true);
-        user.role === 'docent' && (this.isDocent = true);
-        user.role === 'scanner' && (this.isScanner = true);
-      });
   }
 
   public filterByStatus(chip: MatChip, status: string) {

@@ -1,10 +1,5 @@
 <div class="filters">
   <div class="status">
-
-  <p *ngIf="isStudent"><i>Zichtbaar voor student</i></p>
-  <p *ngIf="isDocent"><i>Zichtbaar voor docent</i></p>
-  <p *ngIf="isScanner"><i>Zichtbaar voor scanner</i></p>
-
     <p>Filter op aanvraagstatus</p>
     <mat-chip-list>
       <mat-chip
@@ -83,7 +78,9 @@
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true"
+    ></mat-header-row>
     <mat-row
       *matRowDef="let row; columns: displayedColumns; let i = index"
       (click)="selectAanvraag(row.aanvraagId)"
@@ -103,6 +100,7 @@
   </mat-progress-spinner>
 </mat-card>
 <mat-paginator
+  class="pagination"
   #paginator
   [length]="dataSource.filteredData.length"
   [pageIndex]="0"
