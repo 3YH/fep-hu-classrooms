@@ -4,35 +4,35 @@ import {
   OnDestroy,
   OnInit,
   ViewChild
-} from "@angular/core";
-import { MatChip } from "@angular/material";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { WhereClause } from "../../models/where-clause";
-import { AanvraagService } from "../../services/aanvraag.service";
-import { ExampleDialogComponent } from "../example-dialog/example-dialog.component";
-import { AuthenticationService } from "src/app/services/authentication.service";
-import { User } from "src/app/models/user";
+} from '@angular/core';
+import { MatChip } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { WhereClause } from '../../models/where-clause';
+import { AanvraagService } from '../../services/aanvraag.service';
+import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/models/user';
 
 @Component({
-  selector: "app-aanvragen",
-  templateUrl: "./aanvragen.component.html",
-  styleUrls: ["./aanvragen.component.scss"]
+  selector: 'app-aanvragen',
+  templateUrl: './aanvragen.component.html',
+  styleUrls: ['./aanvragen.component.scss']
 })
 export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
   public MyAanvraag: Aanvraag;
   public displayedColumns = [
-    "index",
-    "aanvragerId",
-    "startTijd",
-    "eindTijd",
-    "aanvraagStatus"
+    'index',
+    'aanvragerId',
+    'startTijd',
+    'eindTijd',
+    'aanvraagStatus'
   ];
   public isLoading = true;
   public members;
@@ -47,11 +47,11 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private aanvraagService: AanvraagService,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   public ngOnInit() {
     this.hasRole();
-    this.getFilteredData("REQUESTED");
+    this.getFilteredData('REQUESTED');
   }
 
   public hasRole() {
@@ -59,9 +59,9 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
       .getCurrentUserInfo()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((user: User) => {
-        user.role === "student" && (this.isStudent = true);
-        user.role === "docent" && (this.isDocent = true);
-        user.role === "scanner" && (this.isScanner = true);
+        user.role === 'student' && (this.isStudent = true);
+        user.role === 'docent' && (this.isDocent = true);
+        user.role === 'scanner' && (this.isScanner = true);
       });
   }
 
@@ -85,8 +85,8 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private getFilteredData(status?: string) {
     const filterbyStatus: WhereClause = {
-      fieldPath: "status.aanvraagStatus",
-      operator: "==",
+      fieldPath: 'status.aanvraagStatus',
+      operator: '==',
       value: status
     };
     return this.aanvraagService
@@ -125,8 +125,8 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
           this.MyAanvraag = element;
         });
         const dialogRef = this.dialog.open(ExampleDialogComponent, {
-          height: "550px",
-          width: "550px",
+          height: '550px',
+          width: '550px',
           data: {
             AanvraagId: this.MyAanvraag.aanvraagId,
             AanvragerId: this.MyAanvraag.aanvragerId,
