@@ -30,4 +30,12 @@ export class ExampleDialogComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  showButtons() {
+    if (this.data.Status === "REQUESTED") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
