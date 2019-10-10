@@ -40,7 +40,9 @@ export class ExampleDialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  public ngOnInit() {}
+  public ngOnInit() {
+    this.hasRole();
+  }
 
   public showButtons(): boolean {
     if (this.data.Status === 'REQUESTED') {
