@@ -1,7 +1,9 @@
 <div class="filters">
   <div class="status">
 
+  <p *ngIf="isStudent"><i>Zichtbaar voor student</i></p>
   <p *ngIf="isDocent"><i>Zichtbaar voor docent</i></p>
+  <p *ngIf="isScanner"><i>Zichtbaar voor scanner</i></p>
 
     <p>Filter op aanvraagstatus</p>
     <mat-chip-list>
