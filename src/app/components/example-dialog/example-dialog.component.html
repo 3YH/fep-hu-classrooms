@@ -15,7 +15,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="" *ngIf="showButtons()">
+  <button mat-button (click)="aanvraagGoedkeuren(data)" *ngIf="showButtons()">
     Goedkeuren
   </button>
   <button mat-button [mat-dialog-close]="" *ngIf="showButtons()">
