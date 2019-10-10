@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { AanvraagService } from "../../services/aanvraag.service";
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AanvraagService } from '../../services/aanvraag.service';
 
 export interface data {
   AanvraagId?: string;
@@ -13,39 +13,48 @@ export interface data {
   StartTijd: string;
   EindTijd: string;
   Motivatie: string;
-  Status: "REQUESTED" | "ACCEPTED" | "REJECTED";
+  Status: 'REQUESTED' | 'ACCEPTED' | 'REJECTED';
   Toelichting?: string;
 }
 
 @Component({
-  selector: "app-example-dialog",
-  templateUrl: "./example-dialog.component.html",
-  styleUrls: ["./example-dialog.component.scss"]
+  selector: 'app-example-dialog',
+  templateUrl: './example-dialog.component.html',
+  styleUrls: ['./example-dialog.component.scss']
 })
 export class ExampleDialogComponent implements OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public MyAanvraag: Aanvraag;
+  public aanvraagString: string;
   constructor(
     public dialogRef: MatDialogRef<ExampleDialogComponent>,
     private aanvraagService: AanvraagService,
     @Inject(MAT_DIALOG_DATA) public data: data
-  ) {}
+  ) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit() {}
+  public ngOnInit() { }
 
-  showButtons() {
-    if (this.data.Status === "REQUESTED") {
+  public showButtons(): boolean {
+    if (this.data.Status === 'REQUESTED') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public checkStatus(): boolean {
+    if (this.data.Status === 'ACCEPTED') {
+      this.generateQRString(this.data.AanvraagId);
       return true;
     } else {
       return false;
     }
   }
 
-  aanvraagGoedkeuren(data) {
+  public aanvraagGoedkeuren(data) {
     // console.log(data);
     this.aanvraagService
       .getAanvraagById(data.AanvraagId)
@@ -54,13 +63,13 @@ export class ExampleDialogComponent implements OnInit, OnDestroy {
         aanvraag.forEach(element => {
           this.MyAanvraag = element;
         });
-        this.MyAanvraag.status.aanvraagStatus = "ACCEPTED";
+        this.MyAanvraag.status.aanvraagStatus = 'ACCEPTED';
         console.log(this.MyAanvraag);
         // this.aanvraagService.updateAanvraag(this.MyAanvraag);
       });
   }
 
-  aanvraagAfkeuren(data) {
+  public aanvraagAfkeuren(data) {
     // data.Status = "ACCEPTED";
     // console.log(data);
     this.aanvraagService
@@ -70,11 +79,20 @@ export class ExampleDialogComponent implements OnInit, OnDestroy {
         aanvraag.forEach(element => {
           this.MyAanvraag = element;
         });
-        this.MyAanvraag.status.aanvraagStatus = "REJECTED";
+        this.MyAanvraag.status.aanvraagStatus = 'REJECTED';
         console.log(this.MyAanvraag);
         // this.aanvraagService.updateAanvraag(this.MyAanvraag);
       });
   }
+
+  public generateQRString(aanvraagID: string) {
+    this.aanvraagService.getAanvraagById(aanvraagID)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((aanvragen: Aanvraag[]) => {
+        this.MyAanvraag = aanvragen[0];
+        this.aanvraagString = '{"Aanvraagid":"' + this.MyAanvraag.aanvraagId + '", "uid":"' + this.MyAanvraag.aanvragerId + '"}';
+      });
+    }
 
   public ngOnDestroy(): void {
     this.onDestroy$.next();

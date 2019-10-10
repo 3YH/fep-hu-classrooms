@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
@@ -33,13 +33,13 @@ export class QrreaderComponent implements OnInit {
       const input = JSON.parse(e);
       if (input.Aanvraagid != null && input.uid != null) {
         const a = moment().format();
-        this.aanvraagservice.getAanvraagByUserUid(input.uid)
+        this.aanvraagservice.getAanvraagById(input.Aanvraagid)
           .pipe(takeUntil(this.onDestroy$))
           .subscribe((aanvragen: Aanvraag[]) => {
             this.aanvragen = aanvragen;
             if (this.aanvragen != null) {
               this.aanvragen.forEach(aanvraag => {
-                if (aanvraag.aanvraagId === input.Aanvraagid
+                if (aanvraag.aanvragerId === input.uid
                   && moment(aanvraag.startTijd).format() < a
                   && moment(aanvraag.eindTijd).format() > a) {
                   this.selectedAanvraag = aanvraag;

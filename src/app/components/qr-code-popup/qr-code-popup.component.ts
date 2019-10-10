@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Subject, pipe } from 'rxjs';
-import { AanvraagService } from 'src/app/Services/aanvraag.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { pipe, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AanvraagService } from 'src/app/Services/aanvraag.service';
 
 @Component({
   selector: 'app-qr-code-popup',
@@ -17,10 +17,10 @@ export class QrCodePopupComponent implements OnInit {
     private aanvraagservice: AanvraagService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
-  public testGetAanvraag(): void {
-    this.aanvraagservice.getAanvraagById('213')
+  public testGetAanvraag(aanvraagID: string): void {
+    this.aanvraagservice.getAanvraagById(aanvraagID)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((aanvragen: Aanvraag[]) => {
         this.myAanvraag = aanvragen[0];
@@ -28,10 +28,6 @@ export class QrCodePopupComponent implements OnInit {
         console.log(this.aanvraagString);
 
       });
-  }
-
-  public generateQR(): void {
-    this.testGetAanvraag();
   }
 
   public ngOnDestroy(): void {
