@@ -47,7 +47,7 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private aanvraagService: AanvraagService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   public ngOnInit() {
     this.hasRole();
@@ -125,8 +125,8 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
           this.MyAanvraag = element;
         });
         const dialogRef = this.dialog.open(ExampleDialogComponent, {
-          height: "400px",
-          width: "400px",
+          height: "550px",
+          width: "550px",
           data: {
             AanvraagId: this.MyAanvraag.aanvraagId,
             AanvragerId: this.MyAanvraag.aanvragerId,
