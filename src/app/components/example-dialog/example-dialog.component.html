@@ -1,1 +1,24 @@
-<p>example-dialog works!</p>
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <p>Aanvraag id: {{ data.AanvraagId }}</p>
+  <p>Aanvrager id: {{ data.AanvragerId }}</p>
+  <p>Docent id: {{ data.DocentId }}</p>
+  <p>Tijdslot: {{ data.StartTijd }} - {{ data.EindTijd }}</p>
+  <p>Motivatie: {{ data.Motivatie }}</p>
+  <p>
+    QR code: <br />
+    {{ data.QrCode }}
+  </p>
+  <p>Status: {{ data.Status }}</p>
+  <p>Toelichting: {{ data.Toelichting }}</p>
+  <p>Ruimte id: {{ data.RuimteId }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="aanvraagGoedkeuren(data)" *ngIf="showButtons()">
+    Goedkeuren
+  </button>
+  <button mat-button [mat-dialog-close]="" *ngIf="showButtons()">
+    Afkeuren
+  </button>
+</div>

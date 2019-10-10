@@ -44,6 +44,13 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="aanvraagId" hidden>
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Aanvraag</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.aanvraagId }} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="aanvragerId">
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Aanvrager</mat-header-cell
@@ -77,7 +84,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row
       *matRowDef="let row; columns: displayedColumns; let i = index"
-      (click)="selectAanvraag()"
+      (click)="selectAanvraag(row.aanvraagId)"
     ></mat-row>
   </mat-table>
 </div>

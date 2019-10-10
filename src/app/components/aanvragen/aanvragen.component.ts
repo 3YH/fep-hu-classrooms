@@ -19,19 +19,20 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/user';
 
 @Component({
-  selector: 'app-aanvragen',
-  templateUrl: './aanvragen.component.html',
-  styleUrls: ['./aanvragen.component.scss']
+  selector: "app-aanvragen",
+  templateUrl: "./aanvragen.component.html",
+  styleUrls: ["./aanvragen.component.scss"]
 })
 export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
+  public MyAanvraag: Aanvraag;
   public displayedColumns = [
-    'index',
-    'aanvragerId',
-    'startTijd',
-    'eindTijd',
-    'aanvraagStatus'
+    "index",
+    "aanvragerId",
+    "startTijd",
+    "eindTijd",
+    "aanvraagStatus"
   ];
   public isLoading = true;
   public members;
@@ -79,8 +80,8 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private getFilteredData(status?: string) {
     const filterbyStatus: WhereClause = {
-      fieldPath: 'status.aanvraagStatus',
-      operator: '==',
+      fieldPath: "status.aanvraagStatus",
+      operator: "==",
       value: status
     };
     return this.aanvraagService
@@ -110,11 +111,31 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.filter = filterValue;
   }
 
-  public selectAanvraag() {
-    const dialogRef = this.dialog.open(ExampleDialogComponent, {
-      height: '400px',
-      width: '400px'
-    });
+  public selectAanvraag(id: string) {
+    this.aanvraagService
+      .getAanvraagById(id)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((aanvraag: Aanvraag[]) => {
+        aanvraag.forEach(element => {
+          this.MyAanvraag = element;
+        });
+        const dialogRef = this.dialog.open(ExampleDialogComponent, {
+          height: "400px",
+          width: "400px",
+          data: {
+            AanvraagId: this.MyAanvraag.aanvraagId,
+            AanvragerId: this.MyAanvraag.aanvragerId,
+            DocentId: this.MyAanvraag.docentId,
+            StartTijd: this.MyAanvraag.startTijd,
+            EindTijd: this.MyAanvraag.eindTijd,
+            Motivatie: this.MyAanvraag.motivatie,
+            RuimteId: this.MyAanvraag.ruimteId,
+            QrCode: this.MyAanvraag.qrCode,
+            Status: this.MyAanvraag.status.aanvraagStatus,
+            Toelichting: this.MyAanvraag.status.toelichting
+          }
+        });
+      });
   }
 
   public ngOnDestroy(): void {
