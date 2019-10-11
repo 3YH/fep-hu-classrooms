@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { CanActivate } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
@@ -13,12 +13,18 @@ import { AuthenticationService } from '../services/authentication.service';
 export class AuthenticationGuard implements CanActivate {
   constructor(
     private authenticationService: AuthenticationService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   public canActivate(): Observable<boolean> {
     return this.authenticationService.getCurrentUserInfo().pipe(
       take(1),
+      tap((user: User) => {
+        if (user.role === 'scanner') {
+          this.router.navigateByUrl('qrreader');
+        }
+      }),
       map((user: User) => !isNullOrUndefined(user)),
       tap((isLoggedIn: boolean) => {
         if (!isLoggedIn) {

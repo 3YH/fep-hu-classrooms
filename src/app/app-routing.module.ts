@@ -4,11 +4,16 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { DashboardComponent } from './components/navigation/dashboard/dashboard.component';
 import { QrreaderComponent } from './components/quick-response-codes/qrreader/qrreader.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { QrReaderGuard } from './guards/qr-reader.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'qrreader', component: QrreaderComponent },
+  {
+    path: 'qrreader',
+    component: QrreaderComponent,
+    canActivate: [QrReaderGuard]
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
