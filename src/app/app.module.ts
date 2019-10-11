@@ -11,9 +11,9 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgxKjuaModule } from 'ngx-kjua';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AanvraagFormComponent } from './components/aanvraag-form/aanvraag-form.component';
 import { AanvragenComponent } from './components/aanvragen/aanvragen.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ExampleDialogComponent } from './components/example-dialog/example-dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { MailRegistratieComponent } from './components/mail-registratie/mail-registratie.component';
 import { OverzichtAanvragenComponent } from './components/overzicht-aanvragen/overzicht-aanvragen.component';
@@ -32,12 +32,11 @@ import { MaterialImportModule } from './material-import.module';
     DashboardComponent,
     OverzichtAanvragenComponent,
     QrCodePopupComponent,
-    ExampleDialogComponent,
     AanvragenComponent,
     AanvraagFormComponent,
     QrreaderComponent
   ],
-  entryComponents: [ExampleDialogComponent],
+  entryComponents: [AanvraagFormComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -45,6 +44,7 @@ import { MaterialImportModule } from './material-import.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+
     MaterialImportModule,
     ZXingScannerModule,
     NgxKjuaModule,

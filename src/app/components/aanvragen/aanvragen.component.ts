@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WhereClause } from '../../models/where-clause';
 import { AanvraagService } from '../../services/aanvraag.service';
-import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
+import { AanvraagFormComponent } from '../aanvraag-form/aanvraag-form.component';
 
 @Component({
   selector: 'app-aanvragen',
@@ -24,7 +24,7 @@ import { ExampleDialogComponent } from '../example-dialog/example-dialog.compone
 export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
   public dataSource = new MatTableDataSource();
-  public MyAanvraag: Aanvraag;
+  public myAanvraag: Aanvraag;
   public displayedColumns = [
     'index',
     'aanvragerId',
@@ -103,24 +103,29 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     this.aanvraagService
       .getAanvraagById(id)
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((aanvraag: Aanvraag[]) => {
-        aanvraag.forEach(element => {
-          this.MyAanvraag = element;
+      .subscribe((aanvragen: Aanvraag[]) => {
+        aanvragen.forEach((aanvraag: Aanvraag) => {
+          this.myAanvraag = aanvraag;
         });
-        this.dialog.open(ExampleDialogComponent, {
+        this.dialog.open(AanvraagFormComponent, {
           height: '550px',
           width: '550px',
           data: {
-            AanvraagId: this.MyAanvraag.aanvraagId,
-            AanvragerId: this.MyAanvraag.aanvragerId,
-            DocentId: this.MyAanvraag.docentId,
-            StartTijd: this.MyAanvraag.startTijd,
-            EindTijd: this.MyAanvraag.eindTijd,
-            Motivatie: this.MyAanvraag.motivatie,
-            RuimteId: this.MyAanvraag.ruimteId,
-            QrCode: this.MyAanvraag.qrCode,
-            Status: this.MyAanvraag.status.aanvraagStatus,
-            Toelichting: this.MyAanvraag.status.toelichting
+            AanvraagId: this.myAanvraag.aanvraagId,
+            AanvragerId: this.myAanvraag.aanvragerId,
+            DocentId: this.myAanvraag.docentId,
+            StartTijd: this.myAanvraag.startTijd,
+            EindTijd: this.myAanvraag.eindTijd,
+            Motivatie: this.myAanvraag.motivatie,
+            RuimteId: this.myAanvraag.ruimteId,
+            QrCode:
+              '{"Aanvraagid":"' +
+              this.myAanvraag.aanvraagId +
+              '", "uid":"' +
+              this.myAanvraag.aanvragerId +
+              '"}',
+            Status: this.myAanvraag.status.aanvraagStatus,
+            Toelichting: this.myAanvraag.status.toelichting
           }
         });
       });

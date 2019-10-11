@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
-import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
+import { AanvraagFormComponent } from '../aanvraag-form/aanvraag-form.component';
 
 @Component({
   selector: 'app-overzicht-aanvragen',
@@ -16,8 +16,7 @@ export class OverzichtAanvragenComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {}
 
   public addAanvraag(): void {
-    this.dialog.open(ExampleDialogComponent, {
-      height: '400px',
+    this.dialog.open(AanvraagFormComponent, {
       width: '400px'
     });
   }
