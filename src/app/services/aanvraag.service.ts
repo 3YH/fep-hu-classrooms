@@ -70,6 +70,28 @@ export class AanvraagService {
   }
 
   /**
+   * Haalt een Aanvraag op a.d.h.v. het UserUID.
+   */
+  public getAanvragenByUserUidByStatus(
+    userUid: string,
+    statusWhereClause: WhereClause
+  ): Observable<Aanvraag[]> {
+    return this.angularFirestore
+      .collection<Aanvraag>('aanvragen', (reference: Query) =>
+        isNullOrUndefined(status)
+          ? reference
+          : reference
+              .where(
+                statusWhereClause.fieldPath,
+                statusWhereClause.operator,
+                statusWhereClause.value
+              )
+              .where('aanvragerId', '==', userUid)
+      )
+      .valueChanges();
+  }
+
+  /**
    * Haalt de aanvragen op van een User.
    *
    * Hierbij wordt onderscheidt gemaakt op basis van type user.

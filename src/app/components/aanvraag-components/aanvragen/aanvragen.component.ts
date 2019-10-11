@@ -12,6 +12,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { WhereClause } from '../../../models/where-clause';
 import { AanvraagService } from '../../../services/aanvraag.service';
@@ -36,6 +37,7 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   public isLoading = true;
   public members;
   public isDocent = false;
+  private currentUser: User;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
@@ -47,11 +49,16 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.getFilteredData('REQUESTED');
-    this.authenticationService.getCurrentUserRole().pipe(
-      takeUntil(this.onDestroy$),
-      map((userRole: string) => (this.isDocent = userRole === 'docent'))
-    );
+    this.authenticationService
+      .getCurrentUserInfo()
+      .pipe(
+        takeUntil(this.onDestroy$),
+        map((userInfo: User) => {
+          this.isDocent = userInfo.role === 'docent';
+          this.currentUser = userInfo;
+        })
+      )
+      .subscribe(() => this.getFilteredData('REQUESTED'));
   }
 
   public filterByStatus(chip: MatChip, status: string): void {
@@ -78,16 +85,29 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
       operator: '==',
       value: status
     };
-    this.aanvraagService
-      .getAanvragen(filterbyStatus)
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(
-        (aanvragen: Aanvraag[]) => {
-          this.isLoading = false;
-          this.dataSource.data = aanvragen;
-        },
-        error => (this.isLoading = false)
-      );
+    if (this.isDocent) {
+      this.aanvraagService
+        .getAanvragen(filterbyStatus)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(
+          (aanvragen: Aanvraag[]) => {
+            this.isLoading = false;
+            this.dataSource.data = aanvragen;
+          },
+          error => (this.isLoading = false)
+        );
+    } else {
+      this.aanvraagService
+        .getAanvragenByUserUidByStatus(this.currentUser.uid, filterbyStatus)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(
+          (aanvragen: Aanvraag[]) => {
+            this.isLoading = false;
+            this.dataSource.data = aanvragen;
+          },
+          error => (this.isLoading = false)
+        );
+    }
   }
 
   public ngAfterViewInit(): void {
