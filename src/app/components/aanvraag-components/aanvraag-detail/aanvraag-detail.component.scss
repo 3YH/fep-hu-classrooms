@@ -1,0 +1,19 @@
+mat-card-content {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+ngx-kjua {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  min-width: 300px;
+}

@@ -19,7 +19,6 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { MailRegistratieComponent } from './components/mail/mail-registratie/mail-registratie.component';
 import { DashboardComponent } from './components/navigation/dashboard/dashboard.component';
 import { PrimaryToolbarComponent } from './components/navigation/primary-toolbar/primary-toolbar.component';
-import { QrCodePopupComponent } from './components/quick-response-codes/qr-code-popup/qr-code-popup.component';
 import { QrreaderComponent } from './components/quick-response-codes/qrreader/qrreader.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
@@ -32,7 +31,6 @@ import { MaterialImportModule } from './material-import.module';
     MailRegistratieComponent,
     DashboardComponent,
     OverzichtAanvragenComponent,
-    QrCodePopupComponent,
     AanvragenComponent,
     AanvraagFormComponent,
     QrreaderComponent,
