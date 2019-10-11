@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<void> = new Subject<void>();
   public mailIsValidated: boolean = false;
+  public mailIsRegistered: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -36,6 +37,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.onDestroy$),
         map((isVerified: boolean) => (this.mailIsValidated = isVerified))
+      )
+      .subscribe();
+
+    this.authenticationService
+      .isUserHuMailRegistered()
+      .pipe(
+        takeUntil(this.onDestroy$),
+        map((isRegistered: boolean) => (this.mailIsRegistered = isRegistered))
       )
       .subscribe();
   }

@@ -1,0 +1,20 @@
+<div
+  class="mail-registratie-afwachting-card-container"
+  [class.mat-elevation-z10]="true"
+>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-header>
+        <mat-card-title>Email validatie status</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p mat-line>{{ currentUser?.huEmail?.email }}</p>
+        <p mat-line>
+          {{
+            currentUser?.huEmail?.validated ? 'Goedgekeurd' : 'In afwachting'
+          }}
+        </p>
+      </mat-card-content>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -22,6 +22,7 @@ import { PrimaryToolbarComponent } from './components/navigation/primary-toolbar
 import { QrreaderComponent } from './components/quick-response-codes/qrreader/qrreader.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
+import { MailRegistratieAfwachtingComponent } from './components/mail/mail-registratie-afwachting/mail-registratie-afwachting.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MaterialImportModule } from './material-import.module';
     AanvragenComponent,
     AanvraagFormComponent,
     QrreaderComponent,
-    AanvraagDetailComponent
+    AanvraagDetailComponent,
+    MailRegistratieAfwachtingComponent
   ],
   entryComponents: [AanvraagFormComponent, AanvraagDetailComponent],
   imports: [

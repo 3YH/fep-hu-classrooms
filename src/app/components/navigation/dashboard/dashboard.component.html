@@ -1,2 +1,7 @@
-<app-mail-registratie *ngIf="!mailIsValidated"></app-mail-registratie>
+<app-mail-registratie
+  *ngIf="!mailIsValidated && !mailIsRegistered"
+></app-mail-registratie>
+<app-mail-registratie-afwachting
+  *ngIf="!mailIsValidated && mailIsRegistered"
+></app-mail-registratie-afwachting>
 <app-overzicht-aanvragen *ngIf="mailIsValidated"></app-overzicht-aanvragen>

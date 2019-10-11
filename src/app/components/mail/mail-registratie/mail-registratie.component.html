@@ -1,1 +1,28 @@
-<p>mail-registratie works!</p>
+<div class="mail-registratie-card-container" [class.mat-elevation-z10]="true">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="emailForm">
+        <mat-form-field color="primary">
+          <input
+            required
+            formControlName="huMail"
+            matInput
+            placeholder="HU Mail"
+          />
+          <mat-error>Je opgegeven email moet eindigen op hu.nl</mat-error>
+        </mat-form-field>
+
+        <mat-action-list class="actionList">
+          <button
+            mat-button
+            color="primary"
+            [disabled]="!isValidEmail"
+            (click)="onSubmit()"
+          >
+            SUBMIT
+          </button>
+        </mat-action-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

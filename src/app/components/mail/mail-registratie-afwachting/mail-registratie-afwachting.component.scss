@@ -1,0 +1,13 @@
+@import '~sass-mq/_mq.scss';
+.mail-registratie-afwachting-card-container {
+  background: #e5e5e5;
+  height: 92%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  justify-content: center;
+  min-width: 300px;
+}
