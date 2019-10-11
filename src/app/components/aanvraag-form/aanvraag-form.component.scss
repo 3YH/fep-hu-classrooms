@@ -1,0 +1,22 @@
+@import '~sass-mq/_mq.scss';
+mat-form-field {
+  width: 100%;
+}
+
+mat-action-list {
+  align-items: flex-end;
+}
+
+.tijdFormFields {
+  @include mq($until: tablet) {
+    flex-direction: column;
+  }
+  display: flex;
+  flex-direction: row;
+}
+
+.actionList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

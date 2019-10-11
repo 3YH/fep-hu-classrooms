@@ -1,0 +1,76 @@
+<form [formGroup]="aanvraagForm">
+  <mat-form-field color="primary">
+    <mat-select formControlName="ruimteId" required placeholder="Ruimte">
+      <mat-option></mat-option>
+      <mat-option
+        *ngFor="let ruimte of beschikbareRuimtes | async"
+        value="{{ ruimte.ruimteId }}"
+        >{{ ruimte.ruimteId }}</mat-option
+      >
+    </mat-select>
+    <mat-error>Een ruimte is verplicht</mat-error>
+  </mat-form-field>
+
+  <mat-form-field color="primary">
+    <input
+      matInput
+      [matDatepicker]="datumPicker"
+      placeholder="Datum"
+      required
+      formControlName="datum"
+      [min]="dateToday"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="datumPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #datumPicker></mat-datepicker>
+    <mat-error>Een datum in de toekomst is verplicht</mat-error>
+  </mat-form-field>
+  <div class="tijdFormFields">
+    <mat-form-field color="primary">
+      <mat-label>Van</mat-label>
+      <mat-select formControlName="startTijd">
+        <mat-option></mat-option>
+        <mat-option
+          *ngFor="let kwartier of kwartieren"
+          value="{{ kwartier }}"
+          >{{ kwartier }}</mat-option
+        >
+      </mat-select>
+      <mat-error>Een begintijd is verplicht</mat-error>
+    </mat-form-field>
+    <mat-form-field color="primary">
+      <mat-label>Tot</mat-label>
+      <mat-select formControlName="eindTijd">
+        <mat-option></mat-option>
+        <mat-option
+          *ngFor="let kwartier of kwartieren"
+          value="{{ kwartier }}"
+          >{{ kwartier }}</mat-option
+        >
+      </mat-select>
+      <mat-error>Een eindtijd is verplicht</mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field color="primary">
+    <input
+      required
+      formControlName="motivatie"
+      matInput
+      placeholder="Motivatie"
+    />
+    <mat-error>Een motivatie is verplicht</mat-error>
+  </mat-form-field>
+
+  <mat-action-list class="actionList">
+    <button
+      mat-button
+      color="primary"
+      [disabled]="!aanvraagForm.valid"
+      (click)="submitAanvraag()"
+    >
+      INDIENEN
+    </button>
+  </mat-action-list>
+</form>
