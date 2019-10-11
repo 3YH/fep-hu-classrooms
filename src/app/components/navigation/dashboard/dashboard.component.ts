@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       takeUntil(this.onDestroy$),
       map((userRole: string) => {
         if (userRole === 'scanner') {
-          this.router.navigateByUrl('app-qrreader');
+          this.router.navigateByUrl('aanvraag-scanner');
         }
         this.ngOnDestroy();
       })

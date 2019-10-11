@@ -22,7 +22,7 @@ export class AuthenticationGuard implements CanActivate {
       take(1),
       tap((user: User) => {
         if (user.role === 'scanner') {
-          this.router.navigateByUrl('qrreader');
+          this.router.navigateByUrl('aanvraag-scanner');
         }
       }),
       map((user: User) => !isNullOrUndefined(user)),
