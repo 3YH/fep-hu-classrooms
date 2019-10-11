@@ -12,8 +12,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { WhereClause } from '../../models/where-clause';
-import { AanvraagService } from '../../services/aanvraag.service';
+import { WhereClause } from '../../../models/where-clause';
+import { AanvraagService } from '../../../services/aanvraag.service';
 import { AanvraagFormComponent } from '../aanvraag-form/aanvraag-form.component';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { LoginComponent } from './components/login/login.component';
-import { QrreaderComponent } from './components/qrreader/qrreader.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { DashboardComponent } from './components/navigation/dashboard/dashboard.component';
+import { QrreaderComponent } from './components/quick-response-codes/qrreader/qrreader.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
 
 const routes: Routes = [
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
