@@ -11,7 +11,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { WhereClause } from '../../../models/where-clause';
 import { AanvraagService } from '../../../services/aanvraag.service';
 import { AanvraagFormComponent } from '../aanvraag-form/aanvraag-form.component';
@@ -41,11 +42,16 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(
     private aanvraagService: AanvraagService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog
   ) {}
 
   public ngOnInit(): void {
     this.getFilteredData('REQUESTED');
+    this.authenticationService.getCurrentUserRole().pipe(
+      takeUntil(this.onDestroy$),
+      map((userRole: string) => (this.isDocent = userRole === 'docent'))
+    );
   }
 
   public filterByStatus(chip: MatChip, status: string): void {
@@ -76,18 +82,14 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
       .getAanvragen(filterbyStatus)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(
-        res => {
+        (aanvragen: Aanvraag[]) => {
           this.isLoading = false;
-          this.dataSource.data = res;
+          this.dataSource.data = aanvragen;
         },
         error => (this.isLoading = false)
       );
   }
 
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
   public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

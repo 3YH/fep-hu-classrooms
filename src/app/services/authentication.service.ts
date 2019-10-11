@@ -114,6 +114,12 @@ export class AuthenticationService implements OnDestroy {
     );
   }
 
+  public getCurrentUserRole(): Observable<string> {
+    return this.getCurrentUserInfo().pipe(
+      map((user: User) => (!isNullOrUndefined(user) ? user.role : ''))
+    );
+  }
+
   public getCurrentUserFirebase(): Observable<FirebaseUser> {
     return this.firebaseAuthentication.authState;
   }
