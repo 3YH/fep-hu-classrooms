@@ -1,0 +1,26 @@
+@import '~sass-mq/_mq.scss';
+.mail-registratie-card-container {
+  background: #e5e5e5;
+  height: 92%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  justify-content: center;
+  min-width: 300px;
+}
+mat-form-field {
+  width: 100%;
+}
+
+mat-action-list {
+  align-items: flex-end;
+}
+
+.actionList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { Ruimte } from '../models/ruimte';
 import { User } from '../models/user';
 import { UserService } from './user.service';

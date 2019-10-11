@@ -66,7 +66,10 @@ export class AanvraagDetailComponent implements OnInit, OnDestroy {
   }
 
   public rejectAanvraag(): void {
-    this.aanvraag.status.toelichting = this.toelichting;
+    this.aanvraag.status.toelichting =
+      this.toelichting === '' || this.toelichting === null
+        ? null
+        : this.toelichting;
     this.aanvraag.status.aanvraagStatus = 'REJECTED';
     this.aanvraagService.updateAanvraag(this.aanvraag);
     this.dialogRef.close();

@@ -114,6 +114,18 @@ export class AuthenticationService implements OnDestroy {
     );
   }
 
+  public isUserHuMailRegistered(): Observable<boolean> {
+    return this.getCurrentUserInfo().pipe(
+      map(
+        (user: User) =>
+          !isNullOrUndefined(user) &&
+          !isNullOrUndefined(user.huEmail) &&
+          !isNullOrUndefined(user.huEmail.email) &&
+          user.huEmail.email !== ''
+      )
+    );
+  }
+
   public getCurrentUserRole(): Observable<string> {
     return this.getCurrentUserInfo().pipe(
       map((user: User) => (!isNullOrUndefined(user) ? user.role : ''))
