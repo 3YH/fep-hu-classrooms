@@ -7,7 +7,7 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 import { QrReaderGuard } from './guards/qr-reader.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'qrreader',
@@ -19,7 +19,7 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthenticationGuard]
   },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({
