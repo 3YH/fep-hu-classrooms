@@ -34,6 +34,7 @@ import { MaterialImportModule } from './material-import.module';
     QrCodePopupComponent,
     ExampleDialogComponent,
     AanvragenComponent,
+    AanvraagFormComponent,
     QrreaderComponent
   ],
   entryComponents: [ExampleDialogComponent],
