@@ -1,3 +1,3 @@
-interface Ruimte {
+export interface Ruimte {
   ruimteId: string;
 }
