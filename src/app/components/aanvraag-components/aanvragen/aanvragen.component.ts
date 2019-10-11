@@ -66,16 +66,29 @@ export class AanvragenComponent implements AfterViewInit, OnInit, OnDestroy {
     if (chip.selected) {
       this.getFilteredData(status);
     } else {
-      this.aanvraagService
-        .getAanvragen()
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(
-          (result: Aanvraag[]) => {
-            this.isLoading = false;
-            this.dataSource.data = result;
-          },
-          error => (this.isLoading = false)
-        );
+      if (this.isDocent) {
+        this.aanvraagService
+          .getAanvragen()
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe(
+            (result: Aanvraag[]) => {
+              this.isLoading = false;
+              this.dataSource.data = result;
+            },
+            error => (this.isLoading = false)
+          );
+      } else {
+        this.aanvraagService
+          .getAanvragenByUser(this.currentUser)
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe(
+            (aanvragen: Aanvraag[]) => {
+              this.isLoading = false;
+              this.dataSource.data = aanvragen;
+            },
+            error => (this.isLoading = false)
+          );
+      }
     }
   }
 
