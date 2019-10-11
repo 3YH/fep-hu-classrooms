@@ -1,0 +1,33 @@
+<!-- WEBCAM ACCESS -->
+<div class="camera">
+    <zxing-scanner (scanSuccess)="scanSuccessHandler($event)">
+    </zxing-scanner>
+</div>
+<!-- QR GENERATOR -->
+<div>
+    <!-- <button mat-button (click)="openSomething()">KLIK</button> -->
+</div>
+<div>
+    <div class="toegangDiv" *ngIf="toegang; else notShow">
+        <div *ngIf="selectedAanvraag">
+            <h4>Gevonden aanvraag</h4>
+            <ul>
+                <li>id: {{selectedAanvraag.aanvraagId}}</li>
+                <li>ruimte: {{selectedAanvraag.ruimteId}}</li>
+                <li>starttijd: {{selectedAanvraag.startTijd}}</li>
+                <li>eindtijd: {{selectedAanvraag.eindTijd}}</li>
+            </ul>
+            <p>
+                Toegang!
+            </p>
+        </div>
+        <ng-template #notShow>
+            <div class="geenToegangDiv">
+                <p>
+                    Geen toegang!
+                </p>
+            </div>
+        </ng-template>
+    </div>
+
+</div>

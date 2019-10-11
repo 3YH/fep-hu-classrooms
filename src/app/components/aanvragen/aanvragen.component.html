@@ -1,6 +1,5 @@
 <div class="filters">
   <div class="status">
-    <p>Filter op aanvraagstatus</p>
     <mat-chip-list>
       <mat-chip
         [selected]="0"
@@ -41,6 +40,13 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="aanvraagId" hidden>
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Aanvraag</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row"> {{ row.aanvraagId }} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="aanvragerId">
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Aanvrager</mat-header-cell
@@ -71,10 +77,12 @@
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true"
+    ></mat-header-row>
     <mat-row
       *matRowDef="let row; columns: displayedColumns; let i = index"
-      (click)="selectAanvraag()"
+      (click)="selectAanvraag(row.aanvraagId)"
     ></mat-row>
   </mat-table>
 </div>
@@ -91,6 +99,7 @@
   </mat-progress-spinner>
 </mat-card>
 <mat-paginator
+  class="pagination"
   #paginator
   [length]="dataSource.filteredData.length"
   [pageIndex]="0"
