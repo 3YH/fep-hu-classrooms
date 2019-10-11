@@ -2,8 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil, tap } from 'rxjs/operators';
+import { QrAanvraag } from 'src/app/models/qrAanvraag';
+import { Scanner } from 'src/app/models/scanner';
+import { User } from 'src/app/models/user';
 import { AanvraagService } from 'src/app/services/aanvraag.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-qrreader',
@@ -12,50 +17,97 @@ import { AanvraagService } from 'src/app/services/aanvraag.service';
 })
 export class QrreaderComponent implements OnInit, OnDestroy {
   public onDestroy$: Subject<void> = new Subject<void>();
-  public aanvragen: Aanvraag[];
   public selectedAanvraag: Aanvraag;
   public toegang: boolean = false;
+  public currentRuimte: string;
+  public backgroundColor: string;
 
-  constructor(private aanvraagservice: AanvraagService) {}
+  constructor(
+    private aanvraagservice: AanvraagService,
+    private authenticationService: AuthenticationService,
+    private matSnackBar: MatSnackBar
+  ) {}
 
-  public ngOnInit() {}
+  public ngOnInit() {
+    this.authenticationService
+      .getCurrentUserInfo()
+      .pipe(
+        takeUntil(this.onDestroy$),
+        map(
+          (scannerInfo: User) =>
+            (this.currentRuimte = (scannerInfo as Scanner).beheerdeRuimtes[0])
+        )
+      )
+      .subscribe();
+  }
 
-  public scanSuccessHandler(e: string): void {
-    console.log(e);
+  public scanSuccessHandler(scannedQrCode: string): void {
+    let aanvraagInput: QrAanvraag;
     try {
-      const input = JSON.parse(e);
-      if (input.Aanvraagid != null && input.uid != null) {
-        const a = moment().format();
+      aanvraagInput = JSON.parse(scannedQrCode) as QrAanvraag;
+
+      if (aanvraagInput.aanvraagId != null && aanvraagInput.userUid != null) {
+        const currentTime = moment().format();
         this.aanvraagservice
-          .getAanvraagById(input.Aanvraagid)
-          .pipe(takeUntil(this.onDestroy$))
+          .getAanvraagById(aanvraagInput.aanvraagId)
+          .pipe(
+            take(1),
+            takeUntil(this.onDestroy$)
+          )
           .subscribe((aanvragen: Aanvraag[]) => {
-            this.aanvragen = aanvragen;
-            if (this.aanvragen != null) {
-              this.aanvragen.forEach(aanvraag => {
-                if (
-                  aanvraag.aanvragerId === input.uid &&
-                  moment(aanvraag.startTijd).format() < a &&
-                  moment(aanvraag.eindTijd).format() > a
-                ) {
-                  this.selectedAanvraag = aanvraag;
-                  this.toegang = true;
+            if (!isNullOrUndefined(aanvragen) && aanvragen.length > 0) {
+              aanvragen.forEach((aanvraag: Aanvraag) => {
+                if (aanvraag.aanvragerId === aanvraagInput.userUid) {
+                  if (
+                    moment(aanvraag.startTijd).format() < currentTime &&
+                    moment(aanvraag.eindTijd).format() > currentTime
+                  ) {
+                    this.selectedAanvraag = aanvraag;
+                    this.toegang = true;
+                    this.backgroundColor = 'green';
+                    setTimeout(() => {
+                      this.backgroundColor = '#e5e5e5';
+                    }, 3000);
+                  } else if (
+                    moment(aanvraag.startTijd).format() < currentTime
+                  ) {
+                    this.backgroundColor = 'red';
+                    this.displayErrorMessage(
+                      'Je afspraak is verlopen. (•ิ_•ิ)?'
+                    );
+                  } else {
+                    this.backgroundColor = 'orange';
+                    this.displayErrorMessage(
+                      `Je afspraak is nog niet begonnen. ヽ/❀o ل͜ o\\ﾉ`
+                    );
+                  }
                 } else {
-                  this.toegang = false;
+                  this.backgroundColor = 'red';
+                  this.displayErrorMessage(
+                    'Jij bent niet de eigenaar van deze afspraak'
+                  );
                 }
-                console.log(this.toegang);
               });
             }
           });
       }
-    } catch (SyntaxError) {
-      alert('geen geldige QR!');
+    } catch (error) {
+      this.backgroundColor = 'red';
+      this.displayErrorMessage(
+        ' (┛❍ᴥ❍)┛彡┻━┻ De QR-code die je probeert te scannen is ongeldig'
+      );
     }
   }
 
-  public onSelect(aanvraag: Aanvraag) {
-    this.selectedAanvraag = aanvraag;
+  private displayErrorMessage(errorMessage: string): void {
+    this.matSnackBar.open(errorMessage, null, {
+      duration: 3000
+    });
+    setTimeout(() => {
+      this.backgroundColor = '#e5e5e5';
+    }, 3000);
   }
+
   public ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();

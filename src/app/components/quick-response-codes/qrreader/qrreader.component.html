@@ -1,33 +1,17 @@
-<!-- WEBCAM ACCESS -->
-<div class="camera">
-    <zxing-scanner (scanSuccess)="scanSuccessHandler($event)">
-    </zxing-scanner>
-</div>
-<!-- QR GENERATOR -->
-<div>
-    <!-- <button mat-button (click)="openSomething()">KLIK</button> -->
-</div>
-<div>
-    <div class="toegangDiv" *ngIf="toegang; else notShow">
-        <div *ngIf="selectedAanvraag">
-            <h4>Gevonden aanvraag</h4>
-            <ul>
-                <li>id: {{selectedAanvraag.aanvraagId}}</li>
-                <li>ruimte: {{selectedAanvraag.ruimteId}}</li>
-                <li>starttijd: {{selectedAanvraag.startTijd}}</li>
-                <li>eindtijd: {{selectedAanvraag.eindTijd}}</li>
-            </ul>
-            <p>
-                Toegang!
-            </p>
-        </div>
-        <ng-template #notShow>
-            <div class="geenToegangDiv">
-                <p>
-                    Geen toegang!
-                </p>
-            </div>
-        </ng-template>
-    </div>
-
+<div
+  class="scan-card-container"
+  [class.mat-elevation-z10]="true"
+  [ngStyle]="{ background: backgroundColor }"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="ruimteIdTitle">
+        <h3 mat-title>{{ currentRuimte }}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <zxing-scanner (scanSuccess)="scanSuccessHandler($event)">
+      </zxing-scanner>
+    </mat-card-content>
+  </mat-card>
 </div>
