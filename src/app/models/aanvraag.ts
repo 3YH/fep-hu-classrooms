@@ -3,7 +3,6 @@ interface Aanvraag {
   docentId?: string;
   aanvragerId: string;
   ruimteId: string;
-  qrCode?: string;
   startTijd: string;
   eindTijd: string;
   motivatie: string;
