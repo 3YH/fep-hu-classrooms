@@ -25,6 +25,10 @@ export class UserService {
   public async addUser(userUid: string): Promise<void> {
     await this.angularFirestore
       .collection('users')
+<<<<<<< HEAD
       .add({ uid: userUid } as User);
+=======
+      .add({ uid: userUid, role: 'student' } as User);
+>>>>>>> 4679f1a07d6c881c5557e85d0a06053f463c6c50
   }
 }

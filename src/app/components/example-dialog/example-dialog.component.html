@@ -1,1 +1,47 @@
-<p>example-dialog works!</p>
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <p>Aanvraag id: {{ data.AanvraagId }}</p>
+  <p>Aanvrager id: {{ data.AanvragerId }}</p>
+  <p>Docent id: {{ data.DocentId }}</p>
+  <p>Tijdslot: {{ data.StartTijd }} - {{ data.EindTijd }}</p>
+  <p>Motivatie: {{ data.Motivatie }}</p>
+
+  <p>Status: {{ data.Status }}</p>
+  <p>Toelichting: {{ data.Toelichting }}</p>
+  <p>Ruimte id: {{ data.RuimteId }}</p>
+
+  <div *ngIf="checkStatus()">
+    <ngx-kjua
+      [text]="aanvraagString"
+      [renderAsync]="false"
+      [render]="'svg'"
+      [crisp]="true"
+      [minVersion]="1"
+      [ecLevel]="'H'"
+      [size]="300"
+      [ratio]="undefined"
+      [fill]="'#333'"
+      [back]="'#fff'"
+      [rounded]="100"
+      [quiet]="1"
+      [mode]="'plain'"
+      [mSize]="30"
+      [mPosX]="50"
+      [mPosY]="50"
+      [label]="'label text'"
+      [fontname]="'sans-serif'"
+      [fontcolor]="'#ff9818'"
+      [image]="undefined"
+      [cssClass]="'image-auto'"
+    ></ngx-kjua>
+  </div>
+</div>
+<div mat-dialog-actions *ngIf="isDocent">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="aanvraagGoedkeuren(data)" *ngIf="showButtons()">
+    Goedkeuren
+  </button>
+  <button mat-button [mat-dialog-close]="" *ngIf="showButtons()">
+    Afkeuren
+  </button>
+</div>

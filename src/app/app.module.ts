@@ -7,6 +7,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { NgxKjuaModule } from 'ngx-kjua';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AanvraagFormComponent } from './components/aanvraag-form/aanvraag-form.component';
@@ -17,6 +19,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MailRegistratieComponent } from './components/mail-registratie/mail-registratie.component';
 import { OverzichtAanvragenComponent } from './components/overzicht-aanvragen/overzicht-aanvragen.component';
 import { PrimaryToolbarComponent } from './components/primary-toolbar/primary-toolbar.component';
+import { QrCodePopupComponent } from './components/qr-code-popup/qr-code-popup.component';
+import { QrreaderComponent } from './components/qrreader/qrreader.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
 
@@ -28,9 +32,11 @@ import { MaterialImportModule } from './material-import.module';
     MailRegistratieComponent,
     DashboardComponent,
     OverzichtAanvragenComponent,
+    QrCodePopupComponent,
     ExampleDialogComponent,
     AanvragenComponent,
-    AanvraagFormComponent
+    AanvraagFormComponent,
+    QrreaderComponent
   ],
   entryComponents: [ExampleDialogComponent],
   imports: [
@@ -41,6 +47,8 @@ import { MaterialImportModule } from './material-import.module';
     FormsModule,
     ReactiveFormsModule,
     MaterialImportModule,
+    ZXingScannerModule,
+    NgxKjuaModule,
 
     /* Firebase modules */
     AngularFireModule.initializeApp(FirebaseConfiguration),
