@@ -17,7 +17,8 @@ export class PrimaryToolbarComponent implements OnInit, OnDestroy {
 
   @Input()
   public title: string;
-  private huInnovationLabSite = 'https://sites.google.com/hu.nl/sie-ict';
+  private huInnovationLabSite: string =
+    'https://sites.google.com/hu.nl/sie-ict';
 
   public currentUser: User;
 

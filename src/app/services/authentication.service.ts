@@ -61,7 +61,7 @@ export class AuthenticationService implements OnDestroy {
   /**
    * Voegt een nieuwe gebruiker toe aan de users collectie.
    */
-  public addCurrentUser() {
+  public addCurrentUser(): void {
     this.firebaseAuthentication.user
       .pipe(
         takeUntil(this.onDestroy$),
@@ -111,6 +111,12 @@ export class AuthenticationService implements OnDestroy {
           !isNullOrUndefined(user.huEmail.email) &&
           user.huEmail.email !== ''
       )
+    );
+  }
+
+  public getCurrentUserRole(): Observable<string> {
+    return this.getCurrentUserInfo().pipe(
+      map((user: User) => (!isNullOrUndefined(user) ? user.role : ''))
     );
   }
 

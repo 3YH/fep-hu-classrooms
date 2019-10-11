@@ -1,0 +1,17 @@
+<div
+  class="scan-card-container"
+  [class.mat-elevation-z10]="true"
+  [ngStyle]="{ background: backgroundColor }"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="ruimteIdTitle">
+        <h3 mat-title>{{ currentRuimte }}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <zxing-scanner (scanSuccess)="scanSuccessHandler($event)">
+      </zxing-scanner>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -11,15 +11,15 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgxKjuaModule } from 'ngx-kjua';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AanvragenComponent } from './components/aanvragen/aanvragen.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ExampleDialogComponent } from './components/example-dialog/example-dialog.component';
-import { LoginComponent } from './components/login/login.component';
-import { MailRegistratieComponent } from './components/mail-registratie/mail-registratie.component';
-import { OverzichtAanvragenComponent } from './components/overzicht-aanvragen/overzicht-aanvragen.component';
-import { PrimaryToolbarComponent } from './components/primary-toolbar/primary-toolbar.component';
-import { QrCodePopupComponent } from './components/qr-code-popup/qr-code-popup.component';
-import { QrreaderComponent } from './components/qrreader/qrreader.component';
+import { AanvraagFormComponent } from './components/aanvraag-components/aanvraag-form/aanvraag-form.component';
+import { AanvragenComponent } from './components/aanvraag-components/aanvragen/aanvragen.component';
+import { OverzichtAanvragenComponent } from './components/aanvraag-components/overzicht-aanvragen/overzicht-aanvragen.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { MailRegistratieComponent } from './components/mail/mail-registratie/mail-registratie.component';
+import { DashboardComponent } from './components/navigation/dashboard/dashboard.component';
+import { PrimaryToolbarComponent } from './components/navigation/primary-toolbar/primary-toolbar.component';
+import { QrCodePopupComponent } from './components/quick-response-codes/qr-code-popup/qr-code-popup.component';
+import { QrreaderComponent } from './components/quick-response-codes/qrreader/qrreader.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
 
@@ -32,11 +32,11 @@ import { MaterialImportModule } from './material-import.module';
     DashboardComponent,
     OverzichtAanvragenComponent,
     QrCodePopupComponent,
-    ExampleDialogComponent,
     AanvragenComponent,
-    QrreaderComponent,
+    AanvraagFormComponent,
+    QrreaderComponent
   ],
-  entryComponents: [ExampleDialogComponent],
+  entryComponents: [AanvraagFormComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -44,6 +44,7 @@ import { MaterialImportModule } from './material-import.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+
     MaterialImportModule,
     ZXingScannerModule,
     NgxKjuaModule,
@@ -56,6 +57,6 @@ import { MaterialImportModule } from './material-import.module';
     LayoutModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,31 @@
+.camera {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.toegangDiv {
+  background-color: green;
+}
+
+.geenToegangDiv {
+  background-color: red;
+}
+
+.center {
+  width: 75%;
+  margin: 10px auto;
+}
+
+.scan-card-container {
+  background: #e5e5e5;
+  height: 92%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: inherit;
+}
+
+.ruimteIdTitle {
+  align-content: center;
+  align-items: center;
+}

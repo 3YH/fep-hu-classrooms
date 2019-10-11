@@ -11,7 +11,7 @@ export class MailRegistratieComponent implements OnInit, OnDestroy {
 
   constructor() {}
 
-  public ngOnInit() {}
+  public ngOnInit(): void {}
 
   public ngOnDestroy(): void {
     this.onDestroy$.next();

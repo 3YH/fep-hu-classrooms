@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, Query } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 import { User } from '../models/user';
 
@@ -20,6 +21,15 @@ export class UserService {
         )
         .valueChanges();
     }
+  }
+
+  public getDocentVanRuimte(ruimteId: string): Observable<User> {
+    return this.angularFirestore
+      .collection<User>('users', (reference: Query) =>
+        reference.where('beheerdeRuimtes', 'array-contains', ruimteId)
+      )
+      .valueChanges()
+      .pipe(map((users: User[]) => users[0]));
   }
 
   public async addUser(userUid: string): Promise<void> {
