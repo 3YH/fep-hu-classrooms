@@ -11,6 +11,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgxKjuaModule } from 'ngx-kjua';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AanvraagDetailComponent } from './components/aanvraag-components/aanvraag-detail/aanvraag-detail.component';
 import { AanvraagFormComponent } from './components/aanvraag-components/aanvraag-form/aanvraag-form.component';
 import { AanvragenComponent } from './components/aanvraag-components/aanvragen/aanvragen.component';
 import { OverzichtAanvragenComponent } from './components/aanvraag-components/overzicht-aanvragen/overzicht-aanvragen.component';
@@ -18,7 +19,6 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { MailRegistratieComponent } from './components/mail/mail-registratie/mail-registratie.component';
 import { DashboardComponent } from './components/navigation/dashboard/dashboard.component';
 import { PrimaryToolbarComponent } from './components/navigation/primary-toolbar/primary-toolbar.component';
-import { QrCodePopupComponent } from './components/quick-response-codes/qr-code-popup/qr-code-popup.component';
 import { QrreaderComponent } from './components/quick-response-codes/qrreader/qrreader.component';
 import { FirebaseConfiguration } from './config/firebase-configuration';
 import { MaterialImportModule } from './material-import.module';
@@ -31,12 +31,12 @@ import { MaterialImportModule } from './material-import.module';
     MailRegistratieComponent,
     DashboardComponent,
     OverzichtAanvragenComponent,
-    QrCodePopupComponent,
     AanvragenComponent,
     AanvraagFormComponent,
-    QrreaderComponent
+    QrreaderComponent,
+    AanvraagDetailComponent
   ],
-  entryComponents: [AanvraagFormComponent],
+  entryComponents: [AanvraagFormComponent, AanvraagDetailComponent],
   imports: [
     HttpClientModule,
     BrowserModule,

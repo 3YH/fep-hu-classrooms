@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ aanvraag.ruimteId }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ userOfAanvraag?.huEmail?.email }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <ng-container
+      *ngIf="
+        aanvraag.status.aanvraagStatus === 'ACCEPTED' &&
+          !!currentUser &&
+          currentUser.role !== 'docent';
+        else aanvraagDetails
+      "
+    >
+      <ngx-kjua
+        [text]="qrAanvraag | json"
+        [renderAsync]="true"
+        [render]="'svg'"
+        [crisp]="true"
+        [mPosY]="50"
+        [mPosX]="50"
+      >
+      </ngx-kjua>
+    </ng-container>
+    <ng-template #aanvraagDetails>
+      <div>
+        <h3>Motivatie</h3>
+        <p mat-line>{{ aanvraag.motivatie }}</p>
+      </div>
+      <div>
+        <h3>Datum</h3>
+        <p mat-line>{{ aanvraag.startTijd }}</p>
+        <p mat-line>{{ aanvraag.eindTijd }}</p>
+      </div>
+      <div
+        *ngIf="
+          aanvraag.status.aanvraagStatus === 'REJECTED' &&
+          aanvraag.status.toelichting !== ''
+        "
+      >
+        <h3>Toelichting docent</h3>
+        <p mat-line>{{ aanvraag.status.toelichting }}</p>
+      </div>
+    </ng-template>
+    <br />
+    <ng-container *ngIf="currentUser?.role === 'docent'">
+      <textarea
+        [(ngModel)]="toelichting"
+        matInput
+        placeholder="Toelichting voor de student"
+        required
+      ></textarea>
+    </ng-container>
+  </mat-card-content>
+  <mat-card-actions *ngIf="currentUser?.role === 'docent'">
+    <button
+      color="accent"
+      [disabled]="toelichting === ''"
+      mat-button
+      (click)="rejectAanvraag()"
+    >
+      WEIGEREN
+    </button>
+    <button color="accent" mat-button (click)="acceptAanvraag()">
+      ACCEPTEREN
+    </button>
+  </mat-card-actions>
+</mat-card>
